@@ -1,0 +1,177 @@
+<div class="container-fluid">
+
+  <h2 class="title">
+    Liste des Data_Center
+    <code tuiText=".tui-space(top, <value>);"></code>
+  </h2>
+
+  <div
+    tuiTextfieldSize="m"
+    class="filters my-5 d-flex justify-content-between"
+  >
+
+    <tui-input
+      class="input me-3"
+      [tuiTextfieldCleaner]="true"
+      tuiTextfieldIconLeft="tuiIconSearchLarge"
+      [(ngModel)]="search"
+    >
+      Recherche
+    </tui-input>
+    <div>
+      <button
+        tuiIconButton
+        appearance="secondary-destructive"
+        size="m"
+        icon="tuiIconRotateCcw"
+        title="Actualiser la liste"
+        shape="rounded"
+        type="button"
+        (click)="query()"
+        class="me-3 "
+      ></button>
+      <button
+        tuiButton
+        size="m"
+        style="min-width: 250px !important"
+        type="button"
+        icon="tuiIconPlus"
+        class="shadow"
+        appearance="accent"
+        routerLink="/admin/data-center/nouveau"
+      >
+        Nouveau Data_Center
+      </button>
+    </div>
+  </div>
+  <table
+    tuiTable
+    class="container-fluid"
+    [columns]="columns"
+  >
+    <thead>
+    <tr tuiThGroup>
+      <th
+        *tuiHead="'nom'"
+        tuiTh
+      >
+        Nom
+      </th>
+      <th
+        *tuiHead="'pays'"
+        tuiTh
+      >
+        Pays
+      </th>
+      <th
+        *tuiHead="'ville'"
+        tuiTh
+      >
+        Ville
+      </th>
+      <th
+        *tuiHead="'quartier'"
+        tuiTh
+      >
+        Quartier
+      </th>
+
+      <th
+        *tuiHead="'createdAt'"
+        tuiTh
+      >
+        Date de Création
+      </th>
+      <th
+        *tuiHead="'actions'"
+        tuiTh
+        [sorter]="null"
+      ></th>
+    </tr>
+    </thead>
+    <tbody
+      *tuiLet="datacenter | tuiTableSort as sortedDatacenter"
+      tuiTbody
+      [data]="sortedDatacenter"
+    >
+    <tr
+      *ngFor="let datacenter of sortedDatacenter; let index = index"
+      tuiTr
+    >
+      <td
+        *tuiCell="'nom'"
+        tuiTd
+      >
+        {{ datacenter.nom }}
+      </td>
+      <td
+        *tuiCell="'pays'"
+        tuiTd
+      >
+        {{ datacenter.pays }}
+      </td>
+      <td
+        *tuiCell="'ville'"
+        tuiTd
+      >
+        {{ datacenter.ville }}
+      </td>
+      <td
+        *tuiCell="'quartier'"
+        tuiTd
+      >
+        {{ datacenter.quartier }}
+      </td>
+      <td
+        *tuiCell="'createdAt'"
+        tuiTd
+      >
+        <div [class]="datacenter.createdAt">{{ datacenter.createdAt | date :'short' }}</div>
+      </td>
+      <td
+        *tuiCell="'actions'"
+        tuiTd
+      >
+
+        <button
+          tuiIconButton
+          appearance="secondary-destructive"
+          size="s"
+          icon="tuiIconEye"
+          title="Detail"
+          shape="rounded"
+          type="button"
+          class="remove"
+          [routerLink]="'/admin/data-center/'+(datacenter.id)+'/detail'"
+        ></button>
+        <button
+          tuiIconButton
+          appearance="secondary-destructive"
+          size="s"
+          icon="tuiIconEdit2"
+          title="Editer"
+          shape="rounded"
+          type="button"
+          class="remove"
+          [routerLink]="'/admin/data-center/'+(datacenter.id)+'/edit'"
+        ></button>
+        <button
+          tuiIconButton
+          appearance="secondary-destructive"
+          size="s"
+          icon="tuiIconTrash"
+          title="Supprimer"
+          (click)="showDialog(datacenter)"
+          shape="rounded"
+          type="button"
+          class="remove"
+        ></button>
+
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+
+
+</div>

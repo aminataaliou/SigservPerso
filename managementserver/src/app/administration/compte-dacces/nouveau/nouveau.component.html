@@ -1,0 +1,71 @@
+<div class="bg-white row  d-flex justify-content-center align-items-center flex-column " >
+  <h2 class=" title mb-3 mt-3 d-flex justify-content-center align-items-center">
+    Nouveau Compte D'accès
+    <code tuiText=".tui-space(top, <value>);"></code>
+  </h2>
+  <form [formGroup]="compteForm" class="col-md-8 " (ngSubmit)="compteSubmited()">
+    <div class="row g-3">
+      <div class="col-md-6 mt-5">
+        <h6> Nom</h6>
+        <tui-input tuiTextfieldSize="m" formControlName="nom">
+          Entrez le nom du Compte!
+          <input  tuiTextfield type="Field placeholder" class="form-control" name="nom"/>
+        </tui-input>
+      </div>
+      <div class="col-md-6 mt-5">
+        <h6> Mot De Passe</h6>
+        <tui-input-password
+          formControlName="password"
+          tuiTextfieldSize="m"
+          class="tui-space_top-2"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          Entrez votre mot de passe!
+          <input
+            placeholder="Mot de Passe!"
+            tuiTextfield
+          />
+        </tui-input-password>
+      </div>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-6 mt-5">
+        <h6>Comfirmation Mot De Passe</h6>
+        <tui-input-password
+          formControlName="confirmationPassword"
+          tuiTextfieldSize="m"
+          class="tui-space_top-2"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          Confirmez votre mot de passe!
+          <input
+            placeholder="Confirmation Mot de Passe!"
+            tuiTextfield
+          />
+        </tui-input-password>
+      </div>
+        <div class="col-md-6 mt-5">
+          <h6>Date de creation</h6>
+          <tui-input-date
+            formControlName="dateCreation"
+            tuiTextfieldSize="m"
+            class="tui-space_vertical-4"
+            [tuiTextfieldLabelOutside]="true"
+          >
+            Choississez la date de creation!
+          </tui-input-date>
+        </div>
+      </div>
+      <div class="tui-form__buttons">
+        <button tuiButton type="button" appearance="secondary-destructive" size="m"
+                class="tui-form__button"
+                routerLink="/admin/compte-acces/liste">
+          Annuler
+        </button>
+        <button tuiButton size="m" type="submit" [disabled]="compteForm.invalid"
+                appearance="accent"  class="tui-form__button" >
+          Soumettre
+        </button>
+      </div>
+  </form>
+</div>

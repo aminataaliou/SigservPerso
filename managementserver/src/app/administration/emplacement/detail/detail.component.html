@@ -1,0 +1,227 @@
+<div class="container-xl">
+  <div class="">
+    <div class="table-wrapper">
+      <div class="table-title my-4">
+        <div class="row ">
+          <div tuiSlot="left" class="d-flex align-items-center">
+            <button
+              tuiIconButton
+              appearance="secondary-destructive"
+              size="s"
+              icon="tuiIconArrowLeftCircleLarge"
+              title="Retour"
+              shape="rounded"
+              type="button"
+              routerLink="/admin/emplacements/liste"
+            ></button>
+            <h3 class="mb-0 mx-2" ><b>Detail de l'emplacement</b></h3>
+          </div>
+        </div>
+      </div>
+
+      <tui-tabs
+        tuiMobileTabs
+        [(activeItemIndex)]="activeItemIndex"
+      >
+        <button
+          class="mb-1 "
+          *ngFor="let item of items,let i = index"
+          tuiTab
+          [ngClass]="{'text-danger': activeItemIndex===i}"
+        >
+          <tui-svg
+            class="tui-space_right-2"
+            [src]="item.icon"
+          ></tui-svg>
+          {{ item.text }}
+        </button>
+      </tui-tabs>
+      <table *ngIf="activeItemIndex===0" class="table table-striped table-hover table-bordered mt-4 table-conten">
+        <tbody>
+        <tr>
+          <td><label ><b>ID</b></label></td>
+          <td><span >{{ emplacement?.id }}</span></td>
+        </tr>
+        <tr>
+          <td><label ><b>Nom du Data Center</b></label></td>
+          <td><span >{{ emplacement?.datacenter?.nom }}</span></td>
+        </tr>
+        <tr>
+          <td><label ><b>Numero de l'armoire</b></label></td>
+          <td><span >{{ emplacement?.armoire }}</span></td>
+        </tr>
+        <tr>
+          <td><label ><b>Numero de l'etagere</b></label></td>
+          <td><span >{{ emplacement?.etagere }}</span></td>
+        </tr>
+        <tr>
+          <td><label ><b>Numero du couloir</b></label></td>
+          <td><span >{{ emplacement?.couloir }}</span></td>
+        </tr>
+        <tr>
+          <td> <label ><b>Date Creation</b></label></td>
+          <td> <span >{{ emplacement?.createdAt | date :'short'}}</span></td>
+        </tr>
+        <tr>
+          <td> <label ><b>Date Mise à jour </b></label></td>
+          <td> <span  >{{ emplacement?.updatedAt | date :'short'}}</span></td>
+        </tr>
+        </tbody>
+      </table>
+      <div>
+        <div
+          tuiTextfieldSize="m"
+          class="filters my-4 me-4 d-flex justify-content-between"
+        >
+          <form
+            [formGroup]="serveurForm"  (ngSubmit)="serveurSubmit" >
+            <div >
+              <button
+                tuiButton
+                size="m"
+                style="min-width: 250px !important"
+                type="button"
+                icon="tuiIconPlus"
+                class="shadow  "
+                appearance="accent"
+                *ngIf="activeItemIndex===1"
+                (click)="showDialogServeur()"
+              >
+                Ajouter le serveur
+              </button>
+              <ng-template
+                let-observer
+                [tuiDialogOptions]="{label: ' Ajout Serveur ', size: 'm'}"
+                [(tuiDialog)]="open"
+              >
+
+                <tui-combo-box
+                  tuiTextfieldSize="m"
+                  formControlName="serveurs"
+                  [valueContent]="contentServeur"
+                  [stringify]="stringifyServeur"
+                >
+                  Serveurs
+                  <input
+                    tuiTextfield
+                    placeholder="Tapez un serveur ..."/>
+                  <tui-data-list-wrapper
+                    *tuiDataList
+                    [items]="serveurs"
+                    [itemContent]="contentServeur"
+                    [emptyContent]="'Aucun serveur'"
+                  ></tui-data-list-wrapper>
+                </tui-combo-box>
+                <ng-template #contentServeur let-serveur>
+                  <div class="template">
+                    <div class="serveur"> Nom: {{serveur?.nom}} | Adresse Ip: {{serveur?.adresseip}} | Etat: {{serveur?.etat}} | Systeme: {{serveur?.systeme}} | CreatedAt: {{serveur?.createdAt}}</div>
+                  </div>
+                </ng-template>
+                <p>
+                  <button
+                    tuiButton
+                    type="submit"
+                    appearance="accent"
+                    class="my-4"
+                    (click)="serveurSubmit()"
+                  >
+                    Ajouter
+                  </button>
+                </p>
+
+              </ng-template>
+            </div>
+          </form>
+        </div>
+        <table
+          tuiTable
+          class="container-fluid mt-4"
+          [columns]="columnsServeur"
+          *ngIf="activeItemIndex===1"
+        >
+          <thead>
+          <tr tuiThGroup>
+            <th
+              *tuiHead="'nom'"
+              tuiTh
+            >
+              Nom du serveur
+            </th>
+            <th
+              *tuiHead="'etat'"
+              tuiTh
+            >
+              Etat
+            </th>
+            <th
+              *tuiHead="'adresseip'"
+              tuiTh
+            >
+              Adresse IP
+            </th>
+            <th
+              *tuiHead="'systeme'"
+              tuiTh
+            >
+              Systeme
+            </th>
+
+            <th
+              *tuiHead="'createdAt'"
+              tuiTh
+            >
+              Date de Création
+            </th>
+          </tr>
+          </thead>
+          <tbody
+            *tuiLet="serveurByEmplacementId | tuiTableSort as sortedServeur"
+            tuiTbody
+            [data]="sortedServeur"
+          >
+          <tr
+            *ngFor="let serveur of sortedServeur; let index = index"
+            tuiTr
+          >
+            <td
+              *tuiCell="'nom'"
+              tuiTd
+            >
+              {{ index + 1 }}. {{ serveur.nom }}
+            </td>
+            <td
+              *tuiCell="'etat'"
+              tuiTd
+            >
+              <div [class]="serveur.etat">{{ serveur.etat }}</div>
+            </td>
+            <td
+              *tuiCell="'adresseip'"
+              tuiTd
+            >
+              <div [class]="serveur.adresseIp">{{ serveur.adresseip }}</div>
+            </td>
+            <td
+              *tuiCell="'systeme'"
+              tuiTd
+            >
+              <div>{{ serveur?.systeme?.nom }}</div>
+            </td>
+            <td
+              *tuiCell="'tags'"
+              tuiTd
+            >
+
+            <td
+              *tuiCell="'createdAt'"
+              tuiTd
+            >
+              <div [class]="serveur.createdAt">{{ serveur.createdAt | date :'short' }}</div>
+            </td>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

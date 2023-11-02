@@ -1,0 +1,83 @@
+<div class="bg-white row  d-flex justify-content-center align-items-center flex-column " >
+  <h2 class=" title mb-5 mt-4 d-flex justify-content-center align-items-center ">
+    Nouvelle Application
+    <code tuiText=".tui-space(top, <value>);"></code>
+  </h2>
+  <form [formGroup]="appliForm" class="col-md-8" (ngSubmit)="appliSubmited()">
+    <div class="row g-3">
+      <div class="col-md-6 mt-5">
+        <h6> Nom </h6>
+        <tui-input tuiTextfieldSize="m" formControlName="nom">
+          Entrez le nom de l'application!
+          <input  tuiTextfield type="Field placeholder" class="form-control" name="nom"/>
+        </tui-input>
+      </div>
+      <div class="col-md-6 mt-5">
+        <h6> Type </h6>
+        <tui-select tuiTextfieldSize="m" formControlName="type">
+          Choississez le type de l'application!
+          <input tuiTextfield placeholder="Entrez le type de l'application"/>
+          <tui-data-list-wrapper *tuiDataList [items]="types"></tui-data-list-wrapper>
+        </tui-select>
+      </div>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-4 mt-5">
+        <h6>Adresse IP</h6>
+        <tui-input tuiTextfieldSize="m" formControlName="adresseip">
+          Entrez l'adresse IP!
+          <input  tuiTextfield type="Field placeholder" class="form-control" name="adresseip"/>
+        </tui-input>
+      </div>
+
+      <div class="col-md-4 mt-5">
+        <h6>Port</h6>
+        <tui-input tuiTextfieldSize="m" formControlName="port">
+          Entrez le port!
+          <input  tuiTextfield type="Field placeholder" class="form-control" name="port"/>
+        </tui-input>
+      </div>
+      <div class="col-md-4 mt-5">
+        <h6> Etat</h6>
+        <tui-select tuiTextfieldSize="m" formControlName="etat">
+          Choississez l'etat de l'application!
+          <input tuiTextfield placeholder="Entrez l'etat du serveur"/>
+          <tui-data-list-wrapper *tuiDataList [items]="etats"></tui-data-list-wrapper>
+        </tui-select>
+      </div>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-6 mt-5">
+        <h6>URL</h6>
+        <tui-input tuiTextfieldSize="m" formControlName="url">
+          Entrez l'url!
+          <input  tuiTextfield type="Field placeholder" class="form-control" name="url"/>
+        </tui-input>
+      </div>
+      <div class="col-md-6 mt-5">
+        <h6>Date de deploiement</h6>
+        <tui-input-date
+          formControlName="dateDeploiement"
+          tuiTextfieldSize="m"
+          class="tui-space_vertical-4"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          Choississez la date
+        </tui-input-date>
+      </div>
+    </div>
+    <div class="tui-form__buttons">
+      <button tuiButton type="button" appearance="secondary-destructive" size="m"
+              routerLink="/admin/applications/liste"
+              class="tui-form__button">
+        Annuler
+      </button>
+      <button tuiButton size="m" type="submit" [disabled]="appliForm.invalid"
+              appearance="accent" class="tui-form__button">
+        Soumettre
+      </button>
+
+    </div>
+  </form>
+</div>
+

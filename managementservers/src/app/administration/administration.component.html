@@ -1,0 +1,26 @@
+<tui-app-bar class="bg-white shadow-sm">
+    
+    <div tuiSlot="left" class="d-flex justify-content-center align-items-center">
+        <button
+        (click)="toggle()"
+        tuiIconButton
+        tuiSlot="left"
+        icon="tuiIconMenuLarge"
+        title="Menu"
+    ></button>
+        <span>SIGSERV</span>
+    </div>
+    <tui-avatar class="tui-space_top-1" size="s" [avatarUrl]="'assets/icon-01.png'" tuiSlot="right">Serveur</tui-avatar>
+    
+</tui-app-bar>
+<div class="container">
+
+    <div class="sidebar">
+        <app-sidnav></app-sidnav>
+    </div>
+
+    <div class="mainbar">
+        <router-outlet></router-outlet>
+    </div>
+</div> 
+  

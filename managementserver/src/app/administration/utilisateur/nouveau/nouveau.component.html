@@ -1,0 +1,68 @@
+<div class="bg-white row  d-flex justify-content-center align-items-center flex-column " >
+    <h2 class=" title mb-5 mt-4 d-flex justify-content-center align-items-center">
+       Nouveau Utilisateur
+        <code tuiText=".tui-space(top, <value>);"></code>
+    </h2>
+<form [formGroup]="utiForm" class="col-md-8" (ngSubmit)="utiSubmited()">
+
+<div class="row g-3 ">
+   <div class="col-md-6 mt-3">
+       <h6> Nom</h6>
+       <tui-input tuiTextfieldSize="m" formControlName="nom">
+           Entrez le nom!
+       <input  tuiTextfield type="Field placeholder" class="form-control" name="nom"/>
+       </tui-input>
+   </div>
+
+   <div class="col-md-6 mt-3">
+    <h6> Prenom</h6>
+    <tui-input tuiTextfieldSize="m" formControlName="prenom">
+        Entrez le prenom!
+    <input  tuiTextfield type="Field placeholder" class="form-control" name="prenom"/>
+    </tui-input>
+    </div>
+</div>
+
+<div class=" mt-3">
+       <h6> Email</h6>
+       <tui-input tuiTextfieldSize="m" formControlName="email">
+           Entrez l'email!
+       <input  tuiTextfield type="Field placeholder" class="form-control" name="email"/>
+       </tui-input>
+   </div>
+
+
+   <div class="mt-1">
+    <h6> Profil</h6>
+     <tui-multi-select
+       tuiTextfieldSize="m"
+       class="input"
+       [tuiTextfieldCleaner]="true"
+       [tuiTextfieldLabelOutside]="true"
+       formControleName="Profil"
+     >
+       Entrez votre profil
+       <tui-data-list-wrapper
+         *tuiDataList
+         [items]="profils"
+         [emptyContent]="'Aucun profil'"
+       ></tui-data-list-wrapper>
+     </tui-multi-select>
+   </div>
+
+
+
+   <div class="tui-form__buttons">
+       <button tuiButton type="button" appearance="secondary-destructive" size="m" routerLink="/admin/utilisateurs/liste"
+           class="tui-form__button">
+           Annuler
+       </button>
+       <button tuiButton size="m" type="submit" [disabled]="utiForm.invalid"
+       appearance="accent"  class="tui-form__button" >
+           Soumettre
+       </button>
+   </div>
+</form>
+</div>
+
+

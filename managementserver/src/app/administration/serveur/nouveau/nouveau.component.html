@@ -1,0 +1,110 @@
+<div class="bg-white row  d-flex justify-content-center align-items-center flex-column " >
+     <h2 class=" title mb-3 mt-3 d-flex justify-content-center align-items-center">
+        Nouveau Serveur
+         <code tuiText=".tui-space(top, <value>);"></code>
+     </h2>
+<form [formGroup]="servForm" class="col-md-8 " (ngSubmit)="servSubmited()">
+
+      <div class="row g-3">
+          <div class="col-md-6 mt-5">
+              <h6> Nom</h6>
+              <tui-input tuiTextfieldSize="m" formControlName="nom">
+                  Entrez le nom du serveur!
+              <input  tuiTextfield type="Field placeholder" class="form-control" name="nom"/>
+              </tui-input>
+          </div>
+
+          <div class="col-md-6 mt-5">
+              <h6> Type</h6>
+              <tui-select tuiTextfieldSize="m" formControlName="type">
+                  Choississez le type du serveur!
+              <input tuiTextfield placeholder="Entrez le type du serveur"/>
+              <tui-data-list-wrapper *tuiDataList [items]="types"></tui-data-list-wrapper>
+              </tui-select>
+          </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6 mt-5">
+          <h6> Etat</h6>
+          <tui-select tuiTextfieldSize="m" formControlName="etat">
+            Choississez l'etat du serveur!
+            <input tuiTextfield placeholder="Entrez l'etat du serveur"/>
+            <tui-data-list-wrapper *tuiDataList [items]="etats"></tui-data-list-wrapper>
+          </tui-select>
+        </div>
+        <div class="col-md-6 mt-5">
+          <h6> Systeme</h6>
+          <tui-combo-box
+            tuiTextfieldSize="m"
+            formControlName="systeme"
+            [valueContent]="contentSysteme"
+            [stringify]="stringifySysteme"
+          >
+            Systèmes
+            <input
+              tuiTextfield
+              placeholder="Tapez un système ..."/>
+            <tui-data-list-wrapper
+              *tuiDataList
+              [items]="systemes"
+              [itemContent]="contentSysteme"
+            ></tui-data-list-wrapper>
+          </tui-combo-box>
+          <ng-template #contentSysteme let-systeme>
+            <div class="template">
+              <div class="systeme"> Nom: {{systeme?.nom}} | Version: {{systeme?.version}} | Distribution: {{systeme?.distribution}}</div>
+            </div>
+          </ng-template>
+      </div>
+      </div>
+
+      <div class="row g-3">
+          <div class="col-md-6 mt-5">
+              <h6> Adresse IP</h6>
+              <tui-input tuiTextfieldSize="m" formControlName="adresseip">
+                  Entrez l'adresse IP!
+              <input  tuiTextfield type="Field placeholder" class="form-control" name="adresseip"/>
+              </tui-input>
+          </div>
+
+          <div class="col-md-6 mt-5">
+              <h6>Emplacement</h6>
+            <tui-combo-box
+              tuiTextfieldSize="m"
+              formControlName="emplacement"
+              [valueContent]="contentEmplacement"
+              [stringify]="stringifyEmplacement"
+            >
+              Emplacements
+              <input
+                tuiTextfield
+                placeholder="Tapez un emplacement ..."/>
+              <tui-data-list-wrapper
+                *tuiDataList
+                [items]="emplacements"
+                [itemContent]="contentEmplacement"
+              ></tui-data-list-wrapper>
+            </tui-combo-box>
+            <ng-template #contentEmplacement let-emplacement>
+              <div class="template">
+                <div class="armoire"> Armoire: {{emplacement?.armoire}} | Couloir: {{emplacement?.couloir}} | Etagère: {{emplacement?.etagere}}</div>
+              </div>
+            </ng-template>
+          </div>
+      </div>
+
+      <div class="tui-form__buttons">
+          <button tuiButton type="button" appearance="secondary-destructive" size="m"
+              class="tui-form__button"
+              routerLink="/admin/serveurs/liste">
+              Annuler
+          </button>
+          <button tuiButton size="m" type="submit" [disabled]="servForm.invalid"
+          appearance="accent"  class="tui-form__button" >
+              Soumettre
+          </button>
+      </div>
+</form>
+</div>
+
+

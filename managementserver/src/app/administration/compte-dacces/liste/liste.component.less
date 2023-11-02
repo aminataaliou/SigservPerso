@@ -1,0 +1,80 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
+:host {
+  display: block;
+}
+
+.title {
+  font: var(--tui-font-heading-3);
+  margin: 1.5rem 0 0.75rem;
+  color: var(--tui-support-08);
+}
+
+td
+{
+  white-space: nowrap;
+  border-color: transparent;
+  border-right-color: var(--tui-base-04);
+
+  &:last-child {
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+  }
+}
+
+th {
+  white-space: nowrap;
+  border-color: rgba(0, 0, 0, 0.116);
+  border-right-color: var(--tui-base-04);
+
+  &:last-child {
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+  }
+}
+
+tbody {
+  border-color: transparent;
+}
+
+tr:nth-child(even) td {
+  background: var(--tui-base-02);
+}
+
+.alive,
+.deceased {
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+
+  &:before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 100%;
+    margin-right: 0.5rem;
+    background: var(--tui-base-04);
+  }
+}
+
+.alive:before {
+  background: var(--tui-success-fill);
+}
+
+.remove {
+  .transition(opacity);
+  opacity: 0;
+
+  tr:hover &,
+  tr:focus-within & {
+    opacity: 1;
+  }
+}
+
+
+.input {
+  width: 400px;
+}
+

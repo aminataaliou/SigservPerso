@@ -1,0 +1,186 @@
+<div class="container-fluid">
+
+    <h2 class="title">
+       Liste des Utilisateurs
+        <code tuiText=".tui-space(top, <value>);"></code>
+    </h2>
+
+    <div
+        tuiTextfieldSize="m"
+        class="filters my-5 d-flex justify-content-between"
+    >
+
+    <tui-input
+        class="input me-3"
+        [tuiTextfieldCleaner]="true"
+        tuiTextfieldIconLeft="tuiIconSearchLarge"
+        [(ngModel)]="search"
+    >
+       Recherche
+    </tui-input>
+    <div>
+        <button
+    tuiIconButton
+    appearance="secondary-destructive"
+    size="m"
+    icon="tuiIconRotateCcw"
+    title="Actualiser la liste"
+    (click)="query()"
+    shape="rounded"
+    type="button"
+    class="me-3 "
+    ></button>
+    <button
+            tuiButton
+            size="m"
+            style="min-width: 250px !important"
+            type="button"
+            icon="tuiIconPlus"
+            class="shadow"
+            appearance="accent"
+            routerLink="/admin/utilisateurs/nouveau"
+        >
+            Nouveau utilisateur
+    </button>
+    </div>
+</div>
+    <table
+        tuiTable
+        class="container-fluid"
+        [columns]="columns"
+
+    >
+        <thead>
+            <tr tuiThGroup>
+                <th
+                    *tuiHead="'nom'"
+                    tuiTh
+                >
+                   Nom
+                </th>
+                <th
+                    *tuiHead="'prenom'"
+                    tuiTh
+                >
+                    Prenom
+                </th>
+                <th
+                    *tuiHead="'email'"
+                    tuiTh
+                >
+                   Email
+                </th>
+
+                <th
+                    *tuiHead="'profil'"
+                    tuiTh
+                >
+                    Profil
+                </th>
+                <th
+                *tuiHead="'createdAt'"
+                tuiTh
+                >
+                Date de Création
+                 </th>
+                <th
+                    *tuiHead="'actions'"
+                    tuiTh
+                    [sorter]="null"
+                ></th>
+            </tr>
+        </thead>
+        <tbody
+            *tuiLet="utilisateurs | tuiTableSort as sortedUtilisateurs"
+            tuiTbody
+            [data]="sortedUtilisateurs"
+        >
+            <tr
+                *ngFor="let utilisateur of sortedUtilisateurs; let index = index"
+                tuiTr
+            >
+                <td
+                    *tuiCell="'nom'"
+                    tuiTd
+                >
+                  {{ utilisateur.nom }}
+                </td>
+
+                <td
+                *tuiCell="'prenom'"
+                tuiTd
+            >
+                <div [class]="utilisateur.prenom">{{ utilisateur.prenom }}</div>
+            </td>
+                <td
+                    *tuiCell="'email'"
+                    tuiTd
+                >
+                    <a
+                        *ngIf="utilisateur.email"
+                        tuiLink
+                        [href]="'mailto:' + utilisateur.email"
+                    >
+                        {{ utilisateur.email }}
+                    </a>
+                </td>
+
+                <td
+                *tuiCell="'profil'"
+                tuiTd
+                >
+                <div >{{ utilisateur.profil }}</div>
+                </td>
+                <td
+                *tuiCell="'createdAt'"
+                tuiTd
+                >
+                <div [class]="utilisateur.createdAt">{{ utilisateur.createdAt | date :'short' }}</div>
+                </td>
+                <td
+                    *tuiCell="'actions'"
+                    tuiTd
+                >
+
+                    <button
+                        tuiIconButton
+                        appearance="secondary-destructive"
+                        size="s"
+                        icon="tuiIconEye"
+                        title="Detail"
+                        shape="rounded"
+                        type="button"
+                        class="remove"
+                        [routerLink]="'/admin/utilisateurs/'+(utilisateur.id)+'/detail'"
+                    ></button>
+                    <button
+                        tuiIconButton
+                        appearance="secondary-destructive"
+                        size="s"
+                        icon="tuiIconEdit2"
+                        title="Editer"
+                        shape="rounded"
+                        type="button"
+                        class="remove"
+                        [routerLink]="'/admin/utilisateurs/'+(utilisateur.id)+'/edit'"
+                    ></button>
+                    <button
+                        tuiIconButton
+                        appearance="secondary-destructive"
+                        size="s"
+                        icon="tuiIconTrash"
+                        title="Supprimer"
+                        shape="rounded"
+                        type="button"
+                        class="remove"
+                        (click)="showDialog(utilisateur)"
+                    ></button>
+
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+
+
+</div>

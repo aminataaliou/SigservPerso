@@ -1,0 +1,213 @@
+<div class="container-fluid">
+
+    <h2 class="title">
+       Liste des Serveurs
+        <code tuiText=".tui-space(top, <value>);"></code>
+    </h2>
+
+    <div
+    tuiTextfieldSize="m"
+    class="filters my-5 d-flex justify-content-between"
+>
+
+    <tui-input
+        class="input me-3"
+        [tuiTextfieldCleaner]="true"
+        tuiTextfieldIconLeft="tuiIconSearchLarge"
+        [(ngModel)]="search"
+    >
+       Recherche
+    </tui-input>
+    <div>
+        <button
+    tuiIconButton
+    appearance="secondary-destructive"
+    size="m"
+    icon="tuiIconRotateCcw"
+    title="Actualiser la liste"
+    (click)="query()"
+    shape="rounded"
+    type="button"
+    class="me-3 "
+></button>
+    <button
+            tuiButton
+            size="m"
+            style="min-width: 250px !important"
+            type="button"
+            icon="tuiIconPlus"
+            class="shadow"
+            appearance="accent"
+            routerLink="/admin/serveurs/nouveau"
+        >
+            Nouveau serveur
+    </button>
+    </div>
+</div>
+    <table
+        tuiTable
+        class="container-fluid"
+        [columns]="columns"
+        *ngIf="serveurs.length!=0"
+    >
+        <thead>
+            <tr tuiThGroup>
+                <th
+                    *tuiHead="'nom'"
+                    tuiTh
+                >
+                   Nom du serveur
+                </th>
+                <th
+                    *tuiHead="'type'"
+                    tuiTh
+                >
+                    Type
+                </th>
+                <th
+                    *tuiHead="'etat'"
+                    tuiTh
+                >
+                    Etat
+                </th>
+                <th
+                    *tuiHead="'adresseip'"
+                    tuiTh
+                >
+                    Adresse IP
+                </th>
+                <th
+                *tuiHead="'systeme'"
+                tuiTh
+                >
+                Systeme
+                 </th>
+
+                <th
+                    *tuiHead="'tags'"
+                    tuiTh
+                    [sorter]="null"
+                >
+                    Tags
+                </th>
+                <th
+                *tuiHead="'createdAt'"
+                tuiTh
+                >
+                Date de Création
+                 </th>
+                <th
+                    *tuiHead="'actions'"
+                    tuiTh
+                    [sorter]="null"
+                ></th>
+            </tr>
+        </thead>
+        <tbody
+            *tuiLet="serveurs | tuiTableSort as sortedServeurs"
+            tuiTbody
+            [data]="sortedServeurs"
+        >
+            <tr
+                *ngFor="let serveur of sortedServeurs; let index = index"
+                tuiTr
+            >
+                <td
+                    *tuiCell="'nom'"
+                    tuiTd
+                >
+                    {{ index + 1 }}. {{ serveur.nom }}
+                </td>
+                <td
+                    *tuiCell="'type'"
+                    tuiTd
+                >
+
+                        {{ serveur.type }}
+
+                </td>
+                <td
+                    *tuiCell="'etat'"
+                    tuiTd
+                >
+                    <div [class]="serveur.etat">{{ serveur.etat }}</div>
+                </td>
+                <td
+                *tuiCell="'adresseip'"
+                tuiTd
+                >
+                <div [class]="serveur.adresseIp">{{ serveur.adresseip }}</div>
+                </td>
+                <td
+                    *tuiCell="'systeme'"
+                    tuiTd
+                >
+                    <div>{{ serveur?.systeme?.nom }}</div>
+                </td>
+                <td
+                    *tuiCell="'tags'"
+                    tuiTd
+                >
+                    <tui-tag
+                        *ngFor="let tag of serveur.tags"
+                        class="tui-space_right-1"
+                        [value]="tag.nom"
+                        [autoColor]="true"
+                    ></tui-tag>
+                </td>
+
+                <td
+                *tuiCell="'createdAt'"
+                tuiTd
+                >
+                <div [class]="serveur.createdAt">{{ serveur.createdAt | date :'short' }}</div>
+                </td>
+                <td
+                    *tuiCell="'actions'"
+                    tuiTd
+                >
+
+                    <button
+                        tuiIconButton
+                        appearance="secondary-destructive"
+                        size="s"
+                        icon="tuiIconEye"
+                        title="Detail"
+                        shape="rounded"
+                        type="button"
+                        class="remove"
+                        [routerLink]="'/admin/serveurs/'+(serveur.id)+'/detail'"
+                    ></button>
+                    <button
+                        tuiIconButton
+                        appearance="secondary-destructive"
+                        size="s"
+                        icon="tuiIconEdit2"
+                        title="Editer"
+                        shape="rounded"
+                        type="button"
+                        class="remove"
+                        [routerLink]="'/admin/serveurs/'+(serveur.id)+'/edit'"
+                    ></button>
+                    <button
+                        tuiIconButton
+                        appearance="secondary-destructive"
+                        size="s"
+                        icon="tuiIconTrash"
+                        title="Supprimer"
+                        shape="rounded"
+                        type="button"
+                        class="remove"
+                        (click)="showDialog(serveur)"
+                    ></button>
+
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="serveurs.length==0" class="p-3 rounded" style="background-color: rgba(224,87,37,0.12)">
+      <h6  style="color: #dd4c1e">Aucun serveur trouvé !</h6>
+    </div>
+
+</div>

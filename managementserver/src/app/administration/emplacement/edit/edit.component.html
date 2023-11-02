@@ -1,0 +1,51 @@
+<div class="bg-white row  d-flex justify-content-center align-items-center flex-column " >
+  <h2 class=" title mb-3 mt-3 d-flex justify-content-center align-items-center">
+    Nouveau Emplacement
+    <code tuiText=".tui-space(top, <value>);"></code>
+  </h2>
+  <form [formGroup]="emplForm" class="col-md-8 " (ngSubmit)="emplSubmited()">
+    <div class="row g-3">
+      <div class="col-md-6 mt-5">
+        <h6> Nom Du Data Center</h6>
+        <tui-input tuiTextfieldSize="m" formControlName="datacenter">
+          Entrez le nom du Data Center!
+          <input  tuiTextfield type="Field placeholder" class="form-control" name="datacenter"/>
+        </tui-input>
+      </div>
+      <div class="col-md-6 mt-5">
+        <h6> Numero du Couloir</h6>
+        <tui-input tuiTextfieldSize="m" formControlName="couloir">
+          Entrez le numero du couloir!
+          <input  tuiTextfield type="Field placeholder" class="form-control" name="couloir"/>
+        </tui-input>
+      </div>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-6 mt-5">
+        <h6> Numero de l'etagère</h6>
+        <tui-input tuiTextfieldSize="m" formControlName="etagere">
+          Entrez le numero de l'etagère!
+          <input  tuiTextfield type="Field placeholder" class="form-control" name="etagere"/>
+        </tui-input>
+      </div>
+      <div class="col-md-6 mt-5">
+        <h6> Numero de l'armoire</h6>
+        <tui-input tuiTextfieldSize="m" formControlName="armoire">
+          Entrez le numero de l'armoire!
+          <input  tuiTextfield type="Field placeholder" class="form-control" name="armoire"/>
+        </tui-input>
+      </div>
+    </div>
+    <div class="tui-form__buttons">
+      <button tuiButton type="button" appearance="secondary-destructive" size="m"
+              class="tui-form__button"
+              routerLink="/admin/emplacements/liste">
+        Annuler
+      </button>
+      <button tuiButton size="m" type="submit" [disabled]="emplForm.invalid"
+              appearance="accent"  class="tui-form__button" >
+        Soumettre
+      </button>
+    </div>
+  </form>
+</div>

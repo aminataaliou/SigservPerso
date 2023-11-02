@@ -1,0 +1,130 @@
+
+    <!-- Nest the directive so it is considered the same active zone -->
+    <div *tuiSidebar="open direction: 'left'" class="t-wrapper" >
+        <div  tuiSlot="left" class="d-flex justify-content-center align-items-center">
+
+            <h2 class="title">
+                SIGSERV
+                <code tuiText="tui-space_top-value>"></code>
+            </h2>
+        <button
+        (click)="toggle()"
+        tuiIconButton
+        type="button"
+        appearance="secondary-destructive"
+        class="tui-space_right-3 tui-space_bottom-3"
+        icon="tuiIconCloseLarge"
+        title="Menu"
+        size="m"
+    ></button>
+</div>
+        <p class="tui-space_bottom-1">
+            <a
+                tuiLink
+                icon="tuiIconHomeLarge"
+                iconAlign="left"
+                routerLink="/admin"  routerLinkActive
+                class="link"
+            >
+               DASHBOARD
+            </a>
+        </p>
+        <p class="tui-space_bottom-1">
+            <a
+                tuiLink
+                icon="tuiIconServerLarge"
+                iconAlign="left"
+                routerLink="/admin/serveurs" routerLinkActive
+                class="link"
+            >
+               SERVEURS
+            </a>
+        </p>
+        <p class="tui-space_bottom-1">
+            <a
+                tuiLink
+                icon="tuiIconCodeLarge"
+                iconAlign="left"
+                routerLink="/admin/applications" routerLinkActive
+                class="link"
+            >
+              APPLICATIONS
+            </a>
+        </p>
+        <p class="tui-space_bottom-1">
+            <a
+                tuiLink
+                icon="tuiIconSettings"
+                iconAlign="left"
+                routerLink="/admin/systemes" routerLinkActive
+                class="link"
+            >
+              SYSTEMES
+            </a>
+        </p>
+        <p class="tui-space_bottom-1">
+            <a
+                tuiLink
+                icon="tuiIconUsersLarge"
+                iconAlign="left"
+                routerLink="/admin/utilisateurs" routerLinkActive
+                class="link"
+            >
+              UTILISATEURS
+            </a>
+        </p>
+
+      <tui-accordion [rounded]="false" class="accordion">
+        <tui-accordion-item borders="top-bottom">
+          <div class="accordion"> GESTIONNAIRE DES TAGS </div>
+          <ng-template tuiAccordionItemContent>
+            <p class="tui-space_bottom-1">
+              <a
+                tuiLink
+                icon="tuiIconMapPinLarge"
+                iconAlign="left"
+                routerLink="/admin/emplacements" routerLinkActive
+                class="link1"
+              >
+                EMPLACEMENT
+              </a>
+            </p>
+            <p class="tui-space_bottom-1">
+              <a
+                tuiLink
+                icon="tuiIconUserLarge"
+                iconAlign="left"
+                routerLink="/admin/compte-acces" routerLinkActive
+                class="link1"
+              >
+                COMPTE D'ACCES
+              </a>
+            </p>
+            <p class="tui-space_bottom-1">
+              <a
+                tuiLink
+                icon="tuiIconTagLarge"
+                iconAlign="left"
+                routerLink="/admin/data-center" routerLinkActive
+                class="link1"
+              >
+                DATA_CENTER
+              </a>
+            </p>
+            <p class="tui-space_bottom-1">
+              <a
+                tuiLink
+                icon="tuiIconTagLarge"
+                iconAlign="left"
+                routerLink="/admin/tags" routerLinkActive
+                class="link1"
+              >
+                TAGS
+              </a>
+            </p>
+
+          </ng-template>
+        </tui-accordion-item>
+      </tui-accordion>
+
+    </div>

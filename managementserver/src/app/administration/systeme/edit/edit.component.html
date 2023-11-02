@@ -1,0 +1,50 @@
+<div class="bg-white row  d-flex justify-content-center align-items-center flex-column " >
+  <h2 class=" title mb-5 mt-4 d-flex justify-content-center align-items-center">
+    Nouveau Systeme
+    <code tuiText=".tui-space(top, <value>);"></code>
+  </h2>
+  <form [formGroup]="sysForm" class="col-md-8" (ngSubmit)="sysSubmited()">
+
+    <div class="mt-2">
+      <h6> Nom</h6>
+      <tui-input tuiTextfieldSize="m" formControlName="nom">
+        Entrez le nom du systeme!
+        <input  tuiTextfield type="Field placeholder" class="form-control" name="nom"/>
+      </tui-input>
+    </div>
+    <div class="mt-2">
+      <h6> Version</h6>
+      <tui-input tuiTextfieldSize="m" formControlName="version">
+        Entrez la version!
+        <input  tuiTextfield type="Field placeholder" class="form-control" name="version"/>
+      </tui-input>
+    </div>
+    <div class="mt-2">
+      <h6> Distribution</h6>
+      <tui-input tuiTextfieldSize="m" formControlName="distribution">
+        Entrez la distribution!
+        <input  tuiTextfield type="Field placeholder" class="form-control" name="distribution"/>
+      </tui-input>
+    </div>
+    <div class="mt-2">
+      <h6> Tags</h6>
+      <tui-multi-select placeholder="text" class="b-form" formControlName="tags"
+                        [tuiTextfieldLabelOutside]="true" [editable]="true" [tagValidator]="tagValidator" [(search)]="search" >
+        Choississez tags!
+        <tui-data-list-wrapper *tuiDataList tuiMultiSelectGroup  [items]="filter(search)"></tui-data-list-wrapper>
+      </tui-multi-select>
+    </div>
+    <div class="tui-form__buttons">
+      <button tuiButton type="button" appearance="secondary-destructive" size="l" routerLink="/admin/systemes/liste"
+              class="tui-form__button">
+        Annuler
+      </button>
+      <button tuiButton size="l" type="submit" [disabled]="sysForm.invalid"
+              appearance="accent"  class="tui-form__button" >
+        Soumettre
+      </button>
+    </div>
+  </form>
+</div>
+
+

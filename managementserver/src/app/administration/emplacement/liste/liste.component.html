@@ -1,0 +1,176 @@
+<div class="container-fluid">
+
+  <h2 class="title">
+    Liste des Emplacements
+    <code tuiText=".tui-space(top, <value>);"></code>
+  </h2>
+
+  <div
+    tuiTextfieldSize="m"
+    class="filters my-5 d-flex justify-content-between"
+  >
+
+    <tui-input
+      class="input me-3"
+      [tuiTextfieldCleaner]="true"
+      tuiTextfieldIconLeft="tuiIconSearchLarge"
+      [(ngModel)]="search"
+    >
+      Recherche
+    </tui-input>
+    <div>
+      <button
+        tuiIconButton
+        appearance="secondary-destructive"
+        size="m"
+        icon="tuiIconRotateCcw"
+        title="Actualiser la liste"
+        shape="rounded"
+        type="button"
+        (click)="query()"
+        class="me-3 "
+      ></button>
+      <button
+        tuiButton
+        size="m"
+        style="min-width: 250px !important"
+        type="button"
+        icon="tuiIconPlus"
+        class="shadow"
+        appearance="accent"
+        routerLink="/admin/emplacements/nouveau"
+      >
+        Nouveau emplacement
+      </button>
+    </div>
+  </div>
+  <table
+    tuiTable
+    class="container-fluid"
+    [columns]="columns"
+  >
+    <thead>
+    <tr tuiThGroup>
+      <th
+        *tuiHead="'nom'"
+        tuiTh
+      >
+        Nom du data center
+      </th>
+      <th
+        *tuiHead="'couloir'"
+        tuiTh
+      >
+        Numero du couloir
+      </th>
+      <th
+        *tuiHead="'armoire'"
+        tuiTh
+      >
+        Numero de l'armoire
+      </th>
+      <th
+        *tuiHead="'etagere'"
+        tuiTh
+      >
+       Numero de l'etagère
+      </th>
+      <th
+        *tuiHead="'createdAt'"
+        tuiTh
+      >
+        Date de Création
+      </th>
+      <th
+        *tuiHead="'actions'"
+        tuiTh
+        [sorter]="null"
+      ></th>
+    </tr>
+    </thead>
+    <tbody
+      *tuiLet="emplacements | tuiTableSort as sortedEmplacements"
+      tuiTbody
+      [data]="sortedEmplacements"
+    >
+    <tr
+      *ngFor="let emplacement of sortedEmplacements; let index = index"
+      tuiTr
+    >
+      <td
+        *tuiCell="'nom'"
+        tuiTd
+      >
+         {{ emplacement?.datacenter?.nom }}
+      </td>
+      <td
+        *tuiCell="'couloir'"
+        tuiTd
+      >
+        {{ emplacement.couloir }}
+      </td>
+      <td
+        *tuiCell="'armoire'"
+        tuiTd
+      >
+         {{ emplacement.armoire }}
+      </td>
+      <td
+        *tuiCell="'etagere'"
+        tuiTd
+      >
+         {{ emplacement.etagere }}
+      </td>
+      <td
+        *tuiCell="'createdAt'"
+        tuiTd
+      >
+        <div [class]="emplacement.createdAt">{{ emplacement.createdAt | date :'short' }}</div>
+      </td>
+      <td
+        *tuiCell="'actions'"
+        tuiTd
+      >
+
+        <button
+          tuiIconButton
+          appearance="secondary-destructive"
+          size="s"
+          icon="tuiIconEye"
+          title="Detail"
+          shape="rounded"
+          type="button"
+          class="remove"
+          [routerLink]="'/admin/emplacements/'+(emplacement.id)+'/detail'"
+        ></button>
+        <button
+          tuiIconButton
+          appearance="secondary-destructive"
+          size="s"
+          icon="tuiIconEdit2"
+          title="Editer"
+          shape="rounded"
+          type="button"
+          class="remove"
+          [routerLink]="'/admin/emplacements/'+(emplacement.id)+'/edit'"
+        ></button>
+        <button
+          tuiIconButton
+          appearance="secondary-destructive"
+          size="s"
+          icon="tuiIconTrash"
+          title="Supprimer"
+          (click)="showDialog(emplacement)"
+          shape="rounded"
+          type="button"
+          class="remove"
+        ></button>
+
+      </td>
+
+    </tr>
+  </tbody>
+  </table>
+
+
+</div>

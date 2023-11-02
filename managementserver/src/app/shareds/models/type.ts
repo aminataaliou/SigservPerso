@@ -1,0 +1,6 @@
+export enum Type {
+  PHYSIQUE='PHYSIQUE',
+  VIRTUEL='VIRTUEL',
+  PROD='PROD',
+  RECETTE='RECETTE'
+}

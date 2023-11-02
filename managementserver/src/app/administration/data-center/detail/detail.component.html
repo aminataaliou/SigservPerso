@@ -1,0 +1,212 @@
+<div class="container-xl">
+  <div class="">
+    <div class="table-wrapper">
+      <div class="table-title my-4">
+        <div class="row ">
+          <div tuiSlot="left" class="d-flex align-items-center">
+            <button
+              tuiIconButton
+              appearance="secondary-destructive"
+              size="s"
+              icon="tuiIconArrowLeftCircleLarge"
+              title="Retour"
+              shape="rounded"
+              type="button"
+              routerLink="/admin/emplacements/liste"
+            ></button>
+            <h3 class="mb-0 mx-2" ><b>Detail de l'emplacement</b></h3>
+          </div>
+        </div>
+      </div>
+
+      <tui-tabs
+        tuiMobileTabs
+        [(activeItemIndex)]="activeItemIndex"
+      >
+        <button
+          class="mb-1 "
+          *ngFor="let item of items,let i = index"
+          tuiTab
+          [ngClass]="{'text-danger': activeItemIndex===i}"
+        >
+          <tui-svg
+            class="tui-space_right-2"
+            [src]="item.icon"
+          ></tui-svg>
+          {{ item.text }}
+        </button>
+      </tui-tabs>
+      <table *ngIf="activeItemIndex===0" class="table table-striped table-hover table-bordered mt-4 table-conten">
+        <tbody>
+        <tr>
+          <td><label ><b>ID</b></label></td>
+          <td><span >{{ datacenter?.id }}</span></td>
+        </tr>
+        <tr>
+          <td><label ><b>Nom </b></label></td>
+          <td><span >{{ datacenter?.nom }}</span></td>
+        </tr>
+        <tr>
+          <td><label ><b>Pays</b></label></td>
+          <td><span >{{ datacenter?.pays}}</span></td>
+        </tr>
+        <tr>
+          <td><label ><b>Ville</b></label></td>
+          <td><span >{{ datacenter?.ville }}</span></td>
+        </tr>
+        <tr>
+          <td><label ><b>Quartier</b></label></td>
+          <td><span >{{ datacenter?.quartier }}</span></td>
+        </tr>
+        <tr>
+          <td> <label ><b>Date Creation</b></label></td>
+          <td> <span >{{ datacenter?.createdAt | date :'short'}}</span></td>
+        </tr>
+        <tr>
+          <td> <label ><b>Date Mise à jour </b></label></td>
+          <td> <span  >{{ datacenter?.updatedAt | date :'short'}}</span></td>
+        </tr>
+        </tbody>
+      </table>
+      <div>
+        <div
+          tuiTextfieldSize="m"
+          class="filters my-4 me-4 d-flex justify-content-between"
+        >
+          <form
+            [formGroup]="emplForm"  (ngSubmit)="emplSubmit" >
+            <div >
+              <button
+                tuiButton
+                size="m"
+                style="min-width: 250px !important"
+                type="button"
+                icon="tuiIconPlus"
+                class="shadow  "
+                appearance="accent"
+                *ngIf="activeItemIndex===1"
+                (click)="showDialogEmplacement()"
+              >
+                Ajouter l'emplacement
+              </button>
+              <ng-template
+                let-observer
+                [tuiDialogOptions]="{label: ' Ajout Emplacement ', size: 'm'}"
+                [(tuiDialog)]="open"
+              >
+
+                <tui-multi-select
+                  class="input"
+                  tuiTextfieldSize="m"
+                  [tuiTextfieldCleaner]="true"
+                  [tuiTextfieldLabelOutside]="true"
+                  [stringify]="stringifyEmplacement"
+                  [valueContent]="contentEmplacement"
+                  formControlName="emplacements"
+                >
+                  EMPLACEMENTS
+                  <tui-data-list-wrapper
+                    *tuiDataList
+                    [items]="emplacements"
+                    [itemContent]="contentEmplacement"
+                  ></tui-data-list-wrapper>
+                </tui-multi-select>
+                <ng-template #contentEmplacement let-emplacement>
+                  <div class="template">
+                    <div class="armoire"> Armoire: {{emplacement?.armoire}} | Couloir: {{emplacement?.couloir}} | Etagère: {{emplacement?.etagere}}</div>
+                  </div>
+                </ng-template>
+                <p>
+                  <button
+                    tuiButton
+                    type="submit"
+                    appearance="accent"
+                    class="my-4"
+                    (click)="emplSubmit()"
+                  >
+                    Ajouter
+                  </button>
+                </p>
+
+              </ng-template>
+            </div>
+          </form>
+        </div>
+        <table
+          tuiTable
+          class="container-fluid mt-4"
+          [columns]="columns"
+          *ngIf="activeItemIndex===1"
+        >
+          <thead>
+          <tr tuiThGroup>
+
+            <th
+              *tuiHead="'couloir'"
+              tuiTh
+            >
+              Couloir
+            </th>
+            <th
+              *tuiHead="'armoire'"
+              tuiTh
+            >
+             Armoire
+            </th>
+
+            <th
+              *tuiHead="'etagere'"
+              tuiTh
+            >
+              Etagere
+            </th>
+
+            <th
+              *tuiHead="'createdAt'"
+              tuiTh
+            >
+              Date de Création
+            </th>
+          </tr>
+          </thead>
+          <tbody
+            *tuiLet="emplacementByDatacenterId | tuiTableSort as sortedEmplacement"
+            tuiTbody
+            [data]="sortedEmplacement"
+          >
+          <tr
+            *ngFor="let emplacement of sortedEmplacement; let index = index"
+            tuiTr
+          >
+            <td
+              *tuiCell="'couloir'"
+              tuiTd
+            >
+              {{ emplacement.couloir }}
+            </td>
+            <td
+              *tuiCell="'armoire'"
+              tuiTd
+            >
+              <div [class]="emplacement.armoire">{{ emplacement.armoire }}</div>
+            </td>
+            <td
+              *tuiCell="'etagere'"
+              tuiTd
+            >
+              <div [class]="emplacement.etagere">{{ emplacement.etagere }}</div>
+            </td>
+
+            <td
+              *tuiCell="'createdAt'"
+              tuiTd
+            >
+              <div [class]="emplacement.createdAt">{{ emplacement.createdAt | date :'short' }}</div>
+            </td>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,156 @@
+<div class="container-fluid">
+
+    <h2 class="title">
+       Liste des Systemes
+        <code tuiText=".tui-space(top, <value>);"></code>
+    </h2>
+
+    <div
+    tuiTextfieldSize="m"
+    class="filters my-5 d-flex justify-content-between"
+>
+
+    <tui-input
+        class="input me-3"
+        [tuiTextfieldCleaner]="true"
+        tuiTextfieldIconLeft="tuiIconSearchLarge"
+        [(ngModel)]="search"
+    >
+       Recherche
+    </tui-input>
+        <div>
+            <button
+        tuiIconButton
+        appearance="secondary-destructive"
+        size="m"
+        icon="tuiIconRotateCcw"
+        title="Actualiser la liste"
+        (click)="query()"
+        shape="rounded"
+        type="button"
+        class="me-3 "
+    ></button>
+    <button
+            tuiButton
+            size="m"
+            style="min-width: 250px !important"
+            type="button"
+            icon="tuiIconPlus"
+            class="shadow"
+            appearance="accent"
+            routerLink="/admin/systemes/nouveau"
+        >
+            Nouveau systeme
+    </button>
+    </div>
+</div>
+    <table
+        tuiTable
+        class="container-fluid"
+        [columns]="columns"
+    >
+        <thead>
+            <tr tuiThGroup>
+                <th
+                    *tuiHead="'nom'"
+                    tuiTh
+                >
+                   Nom du systeme
+                </th>
+                <th
+                    *tuiHead="'version'"
+                    tuiTh
+                >
+                    Version
+                </th>
+                <th
+                    *tuiHead="'distribution'"
+                    tuiTh
+                >
+                   Distribution
+                </th>
+                <th
+                    *tuiHead="'actions'"
+                    tuiTh
+                    [sorter]="null"
+                ></th>
+            </tr>
+        </thead>
+        <tbody
+            *tuiLet="systemes | tuiTableSort as sortedSystemes"
+            tuiTbody
+            [data]="sortedSystemes"
+        >
+            <tr
+                *ngFor="let systeme of sortedSystemes; let index = index"
+                tuiTr
+            >
+                <td
+                    *tuiCell="'nom'"
+                    tuiTd
+                >
+                     {{ systeme.nom }}
+                </td>
+                <td
+                    *tuiCell="'version'"
+                    tuiTd
+                >
+                    <a
+                        *ngIf="systeme.version"
+                        tuiLink
+                        [href]="'mailto:' + systeme.version"
+                    >
+                        {{ systeme.version }}
+                    </a>
+                </td>
+                <td
+                *tuiCell="'distribution'"
+                tuiTd
+                >
+                <div [class]="systeme.distribution">{{ systeme.distribution }}</div>
+                </td>
+                <td
+                    *tuiCell="'actions'"
+                    tuiTd
+                >
+
+                    <button
+                        tuiIconButton
+                        appearance="secondary-destructive"
+                        size="s"
+                        icon="tuiIconEye"
+                        title="Detail"
+                        shape="rounded"
+                        type="button"
+                        class="remove"
+                        [routerLink]="'/admin/systemes/'+(systeme.id)+'/detail'"
+                    ></button>
+                    <button
+                        tuiIconButton
+                        appearance="secondary-destructive"
+                        size="s"
+                        icon="tuiIconEdit2"
+                        title="Editer"
+                        shape="rounded"
+                        type="button"
+                        class="remove"
+                        [routerLink]="'/admin/systemes/'+(systeme.id)+'/edit'"
+                    ></button>
+                    <button
+                        tuiIconButton
+                        appearance="secondary-destructive"
+                        size="s"
+                        icon="tuiIconTrash"
+                        title="Supprimer"
+                        shape="rounded"
+                        type="button"
+                        class="remove"
+                        (click)="showDialog(systeme)"
+                    ></button>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+
+</div>

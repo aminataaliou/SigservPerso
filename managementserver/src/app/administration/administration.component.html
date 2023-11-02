@@ -1,0 +1,58 @@
+<div class="mt-5 pt-3 px-2">
+    <app-sidnav></app-sidnav>
+    <router-outlet></router-outlet>
+</div>
+<!-- APP BAR  -->
+
+<tui-app-bar class="bg-white shadow-sm position-fixed container-fluid d-flex justify-content-between top-0" style="height: 60px;">
+    
+    <div tuiSlot="left" class="d-flex justify-content-center align-items-center">
+        <button
+        (click)="toggle(true)"
+        nativeId="app-sidnav"
+        (tuiAutofilledChange)="toggle($event)"
+        tuiIconButton
+        appearance="secondary-destructive"
+        size="s"
+        icon="tuiIconMenu"
+        title="Menu"
+        shape="rounded"
+        type="button"
+        ></button>
+
+        <img
+        width="60"
+        loading="lazy"
+        alt="Random image"
+        src="assets/SIG2.png"
+        class="me-é mt-1"
+    />
+    </div>
+    
+<div  tuiSlot="right">
+<tui-hosted-dropdown
+    #dropdown
+    [content]="content"
+    [(open)]="dropdownOpen">
+    <button tuiIconButton>
+        <tui-avatar class="tui-space_top-1 me-3" size="s" [avatarUrl]="'assets/icon-01.png'" tuiSlot="right">Serveur</tui-avatar>
+    </button>
+</tui-hosted-dropdown>
+<ng-template #content let-activeZone>
+    <tui-data-list
+        tuiDataListDropdownManager
+        [tuiActiveZoneParent]="activeZone"
+        [size]="size">
+        <button tuiOption (click)="onDropdownOpen()">Paramètre</button>
+        <button tuiOption  (click)="onDropdownOpen()">Mot de passe</button>
+        <button tuiOption  (click)="onDropdownOpen()" routerLink="">Deconnexion</button>
+    </tui-data-list>
+</ng-template>
+</div>
+
+
+</tui-app-bar> 
+
+
+
+  

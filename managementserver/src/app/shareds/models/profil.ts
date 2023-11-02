@@ -1,0 +1,5 @@
+export enum Profil{
+  DEVELOPPEUR='DEV',
+  SYSTEME_RESEAU='SYSTEME',
+  ADMINISTRATEUR='ADMIN',
+}

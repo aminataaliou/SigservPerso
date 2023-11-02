@@ -1,0 +1,148 @@
+<div class="container-fluid">
+
+  <h2 class="title">
+    Liste des Comptes d'Accès
+    <code tuiText=".tui-space(top, <value>);"></code>
+  </h2>
+
+  <div
+    tuiTextfieldSize="m"
+    class="filters my-5 d-flex justify-content-between"
+  >
+
+    <tui-input
+      class="input me-3"
+      [tuiTextfieldCleaner]="true"
+      tuiTextfieldIconLeft="tuiIconSearchLarge"
+      [(ngModel)]="search"
+    >
+      Recherche
+    </tui-input>
+    <div>
+      <button
+        tuiIconButton
+        appearance="secondary-destructive"
+        size="m"
+        icon="tuiIconRotateCcw"
+        title="Actualiser la liste"
+        (click)="query()"
+        shape="rounded"
+        type="button"
+        class="me-3 "
+      ></button>
+      <button
+        tuiButton
+        size="m"
+        style="min-width: 250px !important"
+        type="button"
+        icon="tuiIconPlus"
+        class="shadow"
+        appearance="accent"
+        routerLink="/admin/compte-acces/nouveau"
+      >
+        Nouveau compte
+      </button>
+    </div>
+  </div>
+  <table
+    tuiTable
+    class="container-fluid"
+    [columns]="columns"
+  >
+    <thead>
+    <tr tuiThGroup>
+      <th
+        *tuiHead="'nom'"
+        tuiTh
+      >
+        Nom
+      </th>
+      <th
+        *tuiHead="'password'"
+        tuiTh
+      >
+        Mot de Passe
+      </th>
+      <th
+        *tuiHead="'createdAt'"
+        tuiTh
+      >
+        Date de Création
+      </th>
+      <th
+        *tuiHead="'actions'"
+        tuiTh
+        [sorter]="null"
+      ></th>
+    </tr>
+    </thead>
+    <tbody
+      *tuiLet="comptedacces | tuiTableSort as sortedComptedacces"
+      tuiTbody
+      [data]="sortedComptedacces"
+    >
+    <tr
+      *ngFor="let comptedacces of sortedComptedacces; let index = index"
+      tuiTr
+    >
+      <td
+        *tuiCell="'nom'"
+        tuiTd
+      >
+        {{ comptedacces.nom }}
+      </td>
+      <td
+        *tuiCell="'password'"
+        tuiTd
+      >
+        {{ comptedacces.password }}
+      </td>
+      <td
+        *tuiCell="'createdAt'"
+        tuiTd
+      >
+        <div [class]="comptedacces.createdAt">{{ comptedacces.createdAt | date :'short' }}</div>
+      </td>
+      <td
+        *tuiCell="'actions'"
+        tuiTd
+      >
+
+        <button
+          tuiIconButton
+          appearance="secondary-destructive"
+          size="s"
+          icon="tuiIconEye"
+          title="Detail"
+          shape="rounded"
+          type="button"
+          class="remove"
+          [routerLink]="'/admin/compte-acces/'+(comptedacces.id)+'/detail'"
+        ></button>
+        <button
+          tuiIconButton
+          appearance="secondary-destructive"
+          size="s"
+          icon="tuiIconEdit2"
+          title="Editer"
+          shape="rounded"
+          type="button"
+          class="remove"
+          [routerLink]="'/admin/compte-acces/'+(comptedacces.id)+'/edit'"
+        ></button>
+        <button
+          tuiIconButton
+          appearance="secondary-destructive"
+          size="s"
+          icon="tuiIconTrash"
+          title="Supprimer"
+          (click)="showDialog(comptedacces)"
+          shape="rounded"
+          type="button"
+          class="remove"
+        ></button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
