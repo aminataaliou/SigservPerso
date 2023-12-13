@@ -72,7 +72,6 @@ export class EditComponent implements OnInit  {
     console.log("Before Update")
     console.log(serveur)
 
-
    this.serveurForm.patchValue({
      id: serveur.id,
      nom: serveur.nom,

@@ -1,6 +1,7 @@
 package com.example.sigserv.Services;
 
 import com.example.sigserv.Models.Datacenter;
+import com.example.sigserv.Models.Serveur;
 import com.example.sigserv.Models.Tags;
 import com.example.sigserv.Repository.DatacenterRepository;
 import com.example.sigserv.Repository.TagsRepository;
@@ -22,6 +23,14 @@ public class TagsService {
 
     public Optional<Tags> findOneById(Long id){
         return tagsRepository.findById(id);
+    }
+
+    public List<Tags> findTagsByApplicationId(Long id){
+        return tagsRepository.findTagsByApplicationId(id);
+    }
+
+    public List<Tags> findTagsByServeurId(Long id){
+        return tagsRepository.findTagsByServeurId(id);
     }
 
     public Tags create(Tags tags){

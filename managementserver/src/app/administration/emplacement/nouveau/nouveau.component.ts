@@ -3,6 +3,9 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EmplacementService} from "../../../shareds/services/emplacement.service";
 import {Emplacement} from "../../../shareds/models/emplacement";
 import {Router} from "@angular/router";
+import {Datacenter} from "../../../shareds/models/datacenter";
+import {DatacenterService} from "../../../shareds/services/datacenter.service";
+import {Systeme} from "../../../shareds/models/systeme";
 
 @Component({
   selector: 'app-nouveau',
@@ -11,8 +14,12 @@ import {Router} from "@angular/router";
 })
 export class NouveauComponent {
 
+  datacenter:Datacenter[]
+  readonly stringifyDatacenter = (datacenter: Datacenter): string => `Nom: ${datacenter.nom} `;
+
+
   emplForm = new FormGroup({
-    datacenter: new FormControl(``),
+    datacenter: new FormControl(``,Validators.required),
     couloir: new FormControl(``, Validators.required),
     armoire: new FormControl(``, Validators.required),
     etagere: new FormControl(``, Validators.required),
@@ -21,8 +28,21 @@ export class NouveauComponent {
 
   constructor(
     private emplacementService: EmplacementService,
-    protected router: Router
-  ) {
+    protected router: Router,
+    private datacenterService:DatacenterService,
+  ) {}
+
+  findAllDatacenter(): void {
+    this.datacenterService.query()
+      .subscribe(
+        (res) => {
+          console.log("Datacenter");
+          this.datacenter = res.body ?? [];
+        },
+        (err)=>{
+
+        }
+      )
   }
 
   emplSubmited(): void {

@@ -1,1 +1,171 @@
-<p>liste works!</p>
+<div class="container-fluid">
+
+  <h2 class="title">
+    Liste des Tags
+    <code tuiText=".tui-space(top, <value>);"></code>
+  </h2>
+
+  <div
+    tuiTextfieldSize="m"
+    class="filters my-5 d-flex justify-content-between"
+  >
+
+    <tui-input
+      class="input me-3"
+      [tuiTextfieldCleaner]="true"
+      tuiTextfieldIconLeft="tuiIconSearchLarge"
+      [(ngModel)]="search"
+    >
+      Recherche
+    </tui-input>
+    <div>
+      <button
+        tuiIconButton
+        appearance="secondary-destructive"
+        size="m"
+        icon="tuiIconRotateCcw"
+        title="Actualiser la liste"
+        (click)="query()"
+        shape="rounded"
+        type="button"
+        class="me-3 "
+      ></button>
+      <button
+        tuiButton
+        size="m"
+        style="min-width: 250px !important"
+        type="button"
+        icon="tuiIconPlus"
+        class="shadow"
+        appearance="accent"
+        (click)="showDialog()"
+      >
+        Nouveau tags
+      </button>
+        <ng-template
+          let-observer
+          [tuiDialogOptions]="{label: 'Ajouter votre Tags', size: 's'}"
+          [(tuiDialog)]="open"
+        >
+          <form
+            [formGroup]="tagsForm"
+            (ngSubmit)="tagsSubmited()"
+          >
+            <tui-input
+              formControlName="nom"
+              tuiAutoFocus
+            >
+              Entrez votre tags
+            </tui-input>
+            <p>
+              <button tuiButton size="m" type="submit" [disabled]="tagsForm.invalid"
+                      appearance="accent"  class="tui-form__button my-4" >
+                Soumettre
+              </button>
+            </p>
+          </form>
+        </ng-template>
+    </div>
+  </div>
+  <table
+    tuiTable
+    class="container-fluid"
+    [columns]="columns"
+  >
+    <thead>
+    <tr tuiThGroup>
+      <th
+        *tuiHead="'nom'"
+        tuiTh
+      >
+        Nom
+      </th>
+      <th
+        *tuiHead="'createdAt'"
+        tuiTh
+      >
+        Date de Création
+      </th>
+      <th
+        *tuiHead="'actions'"
+        tuiTh
+        [sorter]="null"
+      ></th>
+    </tr>
+    </thead>
+    <tbody
+      *tuiLet="tags | tuiTableSort as sortedTags"
+      tuiTbody
+      [data]="sortedTags"
+    >
+    <tr
+      *ngFor="let tags of sortedTags; let index = index"
+      tuiTr
+    >
+      <td
+        *tuiCell="'nom'"
+        tuiTd
+      >
+         {{ tags.nom }}
+      </td>
+      <td
+        *tuiCell="'createdAt'"
+        tuiTd
+      >
+        <div [class]="tags.createdAt">{{ tags.createdAt | date :'short' }}</div>
+      </td>
+      <td
+        *tuiCell="'actions'"
+        tuiTd
+      >
+
+        <button
+          tuiIconButton
+          appearance="secondary-destructive"
+          size="s"
+          icon="tuiIconEdit2"
+          title="Editer"
+          shape="rounded"
+          type="button"
+          class="remove"
+          (click)="showDialogTags()"
+        ></button>
+        <ng-template
+          let-observer
+          [tuiDialogOptions]="{label: 'Mise à jour du Tags', size: 's'}"
+          [(tuiDialog)]="open1"
+        >
+          <form
+            [formGroup]="tagForm"
+            (ngSubmit)="tagsSubmit()"
+          >
+            <tui-input
+              formControlName="nom"
+              tuiAutoFocus
+            >
+              Entrez votre tags
+            </tui-input>
+            <p>
+              <button tuiButton size="m" type="submit" [disabled]="tagForm.invalid"
+                      appearance="accent"  class="tui-form__button my-4" >
+                Soumettre
+              </button>
+            </p>
+          </form>
+        </ng-template>
+        <button
+          tuiIconButton
+          appearance="secondary-destructive"
+          size="s"
+          icon="tuiIconTrash"
+          title="Supprimer"
+          shape="rounded"
+          type="button"
+          class="remove"
+          (click)="showDialog1(tags)"
+        ></button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

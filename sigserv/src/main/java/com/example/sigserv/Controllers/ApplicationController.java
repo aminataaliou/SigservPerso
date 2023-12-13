@@ -3,6 +3,7 @@ package com.example.sigserv.Controllers;
 
 import com.example.sigserv.Models.Application;
 import com.example.sigserv.Models.Serveur;
+import com.example.sigserv.Models.Tags;
 import com.example.sigserv.Services.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,10 @@ public class ApplicationController {
     @PostMapping("/applications/add-serveur/{id}")
     public ResponseEntity<Application> addServeursToApplicationById(@PathVariable Long id,@RequestBody Set<Serveur> serveurs){
         return ResponseEntity.ok(applicationService.addServeursToApplicationById(id,serveurs));
+    }
+    @PostMapping("/applications/add-tags/{id}")
+    public ResponseEntity<Application> addTagsToApplicationById(@PathVariable Long id,@RequestBody Set<Tags> tags){
+        return ResponseEntity.ok(applicationService.addTagsToApplicationById(id,tags));
     }
 
     @PutMapping("/applications")

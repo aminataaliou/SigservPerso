@@ -68,10 +68,6 @@
           <td><span >{{ application?.url }}</span></td>
         </tr>
         <tr>
-          <td> <label ><b>Tags</b></label></td>
-          <td> <span >{{ application?.tags}}</span></td>
-        </tr>
-        <tr>
           <td> <label ><b>Date Creation</b></label></td>
           <td> <span >{{ application?.createdAt | date :'short'}}</span></td>
         </tr>
@@ -202,7 +198,7 @@
               *tuiCell="'nom'"
               tuiTd
             >
-              {{ index + 1 }}. {{ serveur.nom }}
+               {{ serveur.nom }}
             </td>
             <td
               *tuiCell="'etat'"
@@ -233,6 +229,119 @@
             >
               <div [class]="serveur.createdAt">{{ serveur.createdAt | date :'short' }}</div>
             </td>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div
+          tuiTextfieldSize="m"
+          class="filters my-4 me-4 d-flex justify-content-between"
+        >
+          <form
+            [formGroup]="tagForm"  (ngSubmit)="tagsSubmit" >
+            <div >
+              <button
+                tuiButton
+                size="m"
+                style="min-width: 250px !important"
+                type="button"
+                icon="tuiIconPlus"
+                class="shadow  "
+                appearance="accent"
+                *ngIf="activeItemIndex===2"
+                (click)="showDialogTags()"
+              >
+                Ajouter le tags
+              </button>
+              <ng-template
+                let-observer
+                [tuiDialogOptions]="{label: ' Ajout Tags ', size: 'm'}"
+                [(tuiDialog)]="open1"
+              >
+
+                <tui-multi-select
+                  tuiTextfieldSize="m"
+                  [editable]="false"
+                  formControlName="tags"
+                  [tuiTextfieldCleaner]="true"
+                  [tuiTextfieldLabelOutside]="true"
+                  [stringify]="stringifyTags"
+                  [valueContent]="contentTags"
+                >
+                  Tags
+                  <tui-data-list-wrapper
+                    *tuiDataList
+                    tuiMultiSelectGroup
+                    [items]="tags"
+                    [itemContent]="contentTags"
+                    [emptyContent]="'Aucun Tags'"
+                  ></tui-data-list-wrapper>
+                </tui-multi-select>
+                <ng-template #contentTags let-tags>
+                  <div class="template">
+                    <div class="tags"> {{tags?.nom}}  </div>
+                  </div>
+                </ng-template>
+                <p>
+                  <button
+                    tuiButton
+                    type="submit"
+                    appearance="accent"
+                    class="my-4"
+                    (click)="tagsSubmit()"
+                  >
+                    Ajouter
+                  </button>
+                </p>
+
+              </ng-template>
+            </div>
+          </form>
+        </div>
+        <table
+          tuiTable
+          class="container-fluid"
+          [columns]="columnstags"
+          *ngIf="activeItemIndex===2"
+        >
+          <thead>
+          <tr tuiThGroup>
+            <th
+              *tuiHead="'nom'"
+              tuiTh
+            >
+              Nom
+            </th>
+            <th
+              *tuiHead="'createdAt'"
+              tuiTh
+            >
+              Date de Création
+            </th>
+          </tr>
+          </thead>
+          <tbody
+            *tuiLet="tagsByApplicationId | tuiTableSort as sortedTags"
+            tuiTbody
+            [data]="sortedTags"
+          >
+          <tr
+            *ngFor="let tags of sortedTags; let index = index"
+            tuiTr
+          >
+            <td
+              *tuiCell="'nom'"
+              tuiTd
+            >
+              {{ tags.nom }}
+            </td>
+            <td
+              *tuiCell="'createdAt'"
+              tuiTd
+            >
+              <div [class]="tags.createdAt">{{ tags.createdAt | date :'short' }}</div>
+            </td>
+          </tr>
           </tbody>
         </table>
       </div>

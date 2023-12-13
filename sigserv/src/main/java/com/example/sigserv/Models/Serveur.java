@@ -1,10 +1,9 @@
 package com.example.sigserv.Models;
 import com.example.sigserv.Models.enums.Etat;
 import com.example.sigserv.Models.enums.Type;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -15,6 +14,7 @@ import java.util.Set;
 
 
 @Entity
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Serveur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,12 +39,15 @@ public class Serveur {
             name="serveurs_comptedacces",
             joinColumns=@JoinColumn(name="serveur_id"),
             inverseJoinColumns=@JoinColumn(name="comptedacces_id"))
-    private List<Comptedacces> comptedacces = new ArrayList<>();
+    @JsonIgnoreProperties(value = {"comptedacces"},allowSetters = true)
+    private Set<Comptedacces> comptedacces = new HashSet<>();
 
     @OneToMany
-    private List<Tags> tags = new ArrayList<>();
+    @JsonIgnoreProperties(value = {"tags"},allowSetters = true)
+    private Set<Tags> tags = new HashSet<>();
 
     @OneToMany
+    @JsonIgnoreProperties(value = {"serveurs","tags","serveur"})
     private List<Serveur> serveurs = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -71,7 +74,7 @@ public class Serveur {
         this.updatedAt = Instant.now();
     }
 
-    public Serveur(Long id, String nom, String adresseip, Emplacement emplacement, Type type, Systeme systeme, Etat etat, List<Comptedacces> comptedacces, List<Tags> tags, List<Serveur> serveurs, Set<Application> applications, Instant createdAt, Instant updatedAt) {
+    public Serveur(Long id, String nom, String adresseip, Emplacement emplacement, Type type, Systeme systeme, Etat etat, Set<Comptedacces> comptedacces, Set<Tags> tags, List<Serveur> serveurs, Set<Application> applications, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.nom = nom;
         this.adresseip = adresseip;
@@ -146,19 +149,20 @@ public class Serveur {
         this.etat = etat;
     }
 
-    public List<Comptedacces> getComptedacces() {
+    public Set<Comptedacces> getComptedacces() {
         return comptedacces;
     }
 
-    public void setComptedacces(List<Comptedacces> comptedacces) {
+    @JsonIgnore
+    public void setComptedacces(Set<Comptedacces> comptedacces) {
         this.comptedacces = comptedacces;
     }
 
-    public List<Tags> getTags() {
+    public Set<Tags> getTags() {
         return tags;
     }
 
-    public void setTags(List<Tags> tags) {
+    public void setTags(Set<Tags> tags) {
         this.tags = tags;
     }
 

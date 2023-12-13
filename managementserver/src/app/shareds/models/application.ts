@@ -9,6 +9,7 @@ export class Application{
   adresseIp: string | undefined | null
   type: string | undefined | null
   etat: string | undefined | null
+  dateDeploiement: string | undefined | null
   createdAt: Date | undefined | null
   updatedAt: Date | undefined | null
   tags: Tags[] | undefined | null

@@ -1,8 +1,6 @@
 package com.example.sigserv.Services;
 
-import com.example.sigserv.Models.Application;
-import com.example.sigserv.Models.Serveur;
-import com.example.sigserv.Models.Systeme;
+import com.example.sigserv.Models.*;
 import com.example.sigserv.Repository.ServeurRepository;
 import com.example.sigserv.config.BadAlertRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +63,25 @@ public class ServeurService {
             return  serveur;
         }).orElseThrow(() -> new BadAlertRequest("Cet application n'existe plus !"));
     }
+    public Serveur addComptesToServerById(Long idServer, Set<Comptedacces> comptedacces){
+        return serveurRepository.findById(idServer)
+                .map(serveur -> {
+                    serveur.setComptedacces(comptedacces);
+                    serveurRepository.save(serveur);
+                    return  serveur;
+                }).orElseThrow(() -> new BadAlertRequest("Ce compte n'existe plus !"));
+    }
+    public Serveur addTagsToServerById(Long idServer, Set<Tags> tags){
+        return serveurRepository.findById(idServer)
+                .map(serveur -> {
+                    serveur.setTags(tags);
+                    serveurRepository.save(serveur);
+                    return  serveur;
+                }).orElseThrow(() -> new BadAlertRequest("Ce tags n'existe plus !"));
+    }
 
     public Serveur addServeursToServerById(Long idServer,List<Serveur> serveurs) {
+
         return serveurRepository.findById(idServer).map( serveur -> {
             serveur.setServeurs(serveurs);
             serveurRepository.save(serveur);

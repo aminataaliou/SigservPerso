@@ -10,6 +10,8 @@ import {FormBuilder, FormControl, FormControlName, FormGroup} from "@angular/for
 import {ComptedaccesService} from "../../../shareds/services/comptedacces.service";
 import {Comptedacces} from "../../../shareds/models/comptedacces";
 import application from "@angular-devkit/build-angular/src/tools/babel/presets/application";
+import {Tags} from "../../../shareds/models/tags";
+import {TagsService} from "../../../shareds/services/tags.service";
 
 
 @Component({
@@ -42,7 +44,6 @@ export class DetailComponent implements  OnInit{
   readonly columnsCompte = ['nom', 'password', 'createdAt'];
 
 
-
   readonly items = [
     {
       text: 'Information Générale',
@@ -64,10 +65,14 @@ export class DetailComponent implements  OnInit{
       text: 'Compte D\'accès',
       icon: 'tuiIconUser',
     },
+    {
+      text: 'Tags',
+      icon: 'tuiIconTag',
+    },
   ];
   comptedacces : readonly Comptedacces[] =[];
-  value2:Comptedacces[] =[];
   open2 = false;
+  readonly stringifyCompte = (comptedacces: Comptedacces): string => `Nom: ${comptedacces.nom} |Mot de passe: ${comptedacces.password} | CreatedAt: ${comptedacces.createdAt}`;
 
   applications: readonly Application[] = [];
   readonly stringifyApplication = (application: Application): string => `NOM: ${application.nom} | TYPE: ${application.type} | ETAT: ${application.etat} | ADRESSE IP: ${application.adresseIp} | PORT: ${application.port} | URL: ${application.url}  | CreatedAt: ${application.createdAt}`;
@@ -78,6 +83,23 @@ export class DetailComponent implements  OnInit{
   readonly stringifyServeurVirtuel = (serveur: Serveur): string => `Nom: ${serveur.nom} | Etat: ${serveur.etat} | Adresse IP: ${serveur.adresseip} | Systeme: ${serveur.systeme}   | CreatedAt: ${serveur.createdAt}`;
   open1=false;
 
+  readonly columnstags = ['nom', 'createdAt'];
+  tagsByServeurId: readonly Tags[] = [];
+  tag:Tags | undefined;
+  open3=false;
+  tags:readonly Tags[];
+  readonly stringifyTags = (tags: Tags): string => `Nom: ${tags.nom} | CreatedAt: ${tags.createdAt}`;
+
+  tagForm = this.fb.group({
+    tags:[],
+  })
+  serveurVirtuelForm = this.fb.group({
+    serveurs: [],
+  });
+  compteForm=this.fb.group({
+    comptedacces:[]
+  })
+
   constructor(
     private activatedroute: ActivatedRoute,
     private serveurService:ServeurService,
@@ -86,7 +108,8 @@ export class DetailComponent implements  OnInit{
     private applicationService : ApplicationService,
     private comptedaccesService : ComptedaccesService,
     protected router: Router,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    private tagsService:TagsService,
   ) {}
 
   ngOnInit(): void {
@@ -96,9 +119,13 @@ export class DetailComponent implements  OnInit{
         this.findServeurById(this.id!);
         this.findAllApplication();
         this.findApplicationByServeurId(this.id!);
+        this.findAllCompte();
         this.findComptedaccesByServeurId(this.id!);
         this.findAllServeur();
         this.findServeurVirtuelByServeurId(this.id!);
+        this.findAllTags();
+        this.findTagsByServeurId(this.id!);
+
       }
     })
     console.log("data======",this.id);
@@ -195,9 +222,7 @@ export class DetailComponent implements  OnInit{
   showDialogVirtuel(): void {
     this.open1 = true;
   }
-  serveurVirtuelForm = this.fb.group({
-    serveurs: [],
-  });
+
   servVirtuelSubmit(){
     console.log("SERV VIRTUEL SUBMIT 000000",this.serveurVirtuelForm.get('serveurs')?.value);
     const serveurs :Serveur[] = this.serveurVirtuelForm.get('serveurs')?.value;
@@ -216,6 +241,75 @@ export class DetailComponent implements  OnInit{
     )
   }
 
+  showDialogTags(): void {
+    this.open3 = true;
+  }
+
+  findAllTags(): void{
+    this.tagsService.query().subscribe(
+      (res)=> {
+        console.log("TAGS");
+        this.tags = res.body ?? [];
+      }
+    )
+  }
+
+  findTagsByServeurId(id:number):void{
+    this.tagsService.findTagsByServeurId(id).subscribe(
+      (res) => {
+        console.log("TagsByServeurId",res.body);
+        this.tagsByServeurId = res.body ?? [];
+      },
+      (err)=>{}
+    )
+  }
+
+  tagsSubmit(){
+    console.log(" Serveur TAGS SUBMIT",this.tagForm.get('tags')?.value);
+    const tags: Tags[] = this.tagForm.get('tags')?.value;
+    this.serveurService.addTagsToServerById(this.serveur, tags)
+      .subscribe(
+        (res) => {
+          console.log("Savegarder avec succès",res);
+          this.open3 = false;
+          this.tagForm.patchValue({
+            tags: []
+          })
+          this.findTagsByServeurId(this.serveur.id);
+        },
+        (err)=>{
+          console.log("Erreur lors de la sauvegarde",err);
+        }
+      )
+  }
+
+  findAllCompte(): void{
+    this.comptedaccesService.query().subscribe(
+      (res)=> {
+        console.log("Compte");
+        this.comptedacces = res.body ?? [];
+      }
+    )
+  }
+
+  compteSubmited(){
+    console.log(" Serveur Compte SUBMIT",this.compteForm.get('comptedacces')?.value);
+    const comptedacces: Comptedacces[] = this.compteForm.get('comptedacces')?.value;
+    this.serveurService.addComptesToServerById(this.serveur, comptedacces)
+      .subscribe(
+        (res) => {
+          console.log("Savegarder avec succès",res);
+          this.open2 = false;
+          this.compteForm.patchValue({
+            comptedacces: []
+          })
+          this.findComptedaccesByServeurId(this.serveur.id);
+        },
+        (err)=>{
+          console.log("Erreur lors de la sauvegarde",err);
+        }
+      )
+  }
 }
 
 

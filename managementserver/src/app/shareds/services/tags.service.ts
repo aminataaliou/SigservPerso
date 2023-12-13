@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Observable} from "rxjs";
-import {Serveur} from "../models/serveur";
 import {environment} from "../../../environments/environment";
 import { Tags } from '../models/tags';
 
@@ -31,5 +30,12 @@ export class TagsService {
 
   findById(id: number): Observable<HttpResponse<Tags>> {
     return this.http.get<Tags>(`${this.END_POINT}/${id}`,{observe: "response"});
+  }
+
+  findTagsByServeurId(id: number): Observable<HttpResponse<Tags[]>> {
+    return this.http.get<Tags[]>(`${this.END_POINT}/tags-serveur/${id}`,{observe: "response"});
+  }
+  findTagsByApplicationId(id: number): Observable<HttpResponse<Tags[]>> {
+    return this.http.get<Tags[]>(`${this.END_POINT}/tags-application/${id}`,{observe: "response"});
   }
 }

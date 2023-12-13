@@ -19,7 +19,7 @@ import {ConfirmationDeleteComponent} from "../../confirmation-delete/confirmatio
 
 export class ListeComponent  {
 
-  readonly columns = ['nom','type','etat','adresseIp','port','url','createdAt', 'tags', 'actions'];
+  readonly columns = ['nom','type','etat','adresseIp','port','url','createdAt', 'actions'];
 
     search = '';
 

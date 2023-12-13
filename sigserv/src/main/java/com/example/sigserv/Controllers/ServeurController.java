@@ -1,9 +1,7 @@
 package com.example.sigserv.Controllers;
 
 
-import com.example.sigserv.Models.Application;
-import com.example.sigserv.Models.Serveur;
-import com.example.sigserv.Models.Systeme;
+import com.example.sigserv.Models.*;
 import com.example.sigserv.Services.ServeurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +39,8 @@ public class ServeurController {
 
     @GetMapping("/serveurs/serveurs-serveur-virtuel/{id}")
     public ResponseEntity<List<Serveur>> findServeurVirtuelByServeurId(@PathVariable Long id){
-        return ResponseEntity.ok(serveurService.findServeurVirtuelByServeurId(id));
+        ResponseEntity<List<Serveur>> listResponseEntity = ResponseEntity.ok(serveurService.findServeurVirtuelByServeurId(id));
+        return listResponseEntity;
     }
 
     @GetMapping("/serveurs/serveurs-compte-acces/{id}")
@@ -55,9 +54,18 @@ public class ServeurController {
         return ResponseEntity.ok(serveurService.create(serveur));
     }
 
+    @PostMapping("/serveurs/add-compte-acces/{id}")
+    public ResponseEntity<Serveur> addComptesToServerById(@PathVariable Long id,@RequestBody Set<Comptedacces> comptedacces){
+        return ResponseEntity.ok(serveurService.addComptesToServerById(id,comptedacces));
+    }
     @PostMapping("/serveurs/add-application/{id}")
     public ResponseEntity<Serveur> addApplicationsToServerById(@PathVariable Long id,@RequestBody Set<Application> applications){
         return ResponseEntity.ok(serveurService.addApplicationsToServerById(id,applications));
+    }
+
+    @PostMapping("/serveurs/add-tags/{id}")
+    public ResponseEntity<Serveur> addTagsToServerById(@PathVariable Long id,@RequestBody Set<Tags> tags){
+        return ResponseEntity.ok(serveurService.addTagsToServerById(id,tags));
     }
 
     @PostMapping("/serveurs/add-serveurs/{id}")

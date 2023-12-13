@@ -9,4 +9,9 @@ export class Datacenter{
   emplacement: Emplacement[] | undefined | null
   createdAt: Date | undefined | null
   updatedAt: Date | undefined | null
+
+  toString(): string {
+    return `,
+    nom: ${this.nom} | pays: ${this.pays} | ville: ${this.ville}| quartier: ${this.quartier}`;
+  }
 }

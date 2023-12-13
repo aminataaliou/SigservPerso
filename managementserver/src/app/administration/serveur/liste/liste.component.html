@@ -82,14 +82,6 @@
                 >
                 Systeme
                  </th>
-
-                <th
-                    *tuiHead="'tags'"
-                    tuiTh
-                    [sorter]="null"
-                >
-                    Tags
-                </th>
                 <th
                 *tuiHead="'createdAt'"
                 tuiTh
@@ -144,17 +136,6 @@
                 >
                     <div>{{ serveur?.systeme?.nom }}</div>
                 </td>
-                <td
-                    *tuiCell="'tags'"
-                    tuiTd
-                >
-                    <tui-tag
-                        *ngFor="let tag of serveur.tags"
-                        class="tui-space_right-1"
-                        [value]="tag.nom"
-                        [autoColor]="true"
-                    ></tui-tag>
-                </td>
 
                 <td
                 *tuiCell="'createdAt'"
@@ -169,24 +150,25 @@
 
                     <button
                         tuiIconButton
-                        appearance="secondary-destructive"
+                        appearance="flat"
                         size="s"
                         icon="tuiIconEye"
-                        title="Detail"
+                        [tuiHint]="tooltip"
                         shape="rounded"
                         type="button"
-                        class="remove"
+                        class="text-info remove me-2"
                         [routerLink]="'/admin/serveurs/'+(serveur.id)+'/detail'"
                     ></button>
+                  <ng-template #tooltip> Detail	</ng-template>
                     <button
                         tuiIconButton
-                        appearance="secondary-destructive"
+                        appearance="custom"
                         size="s"
                         icon="tuiIconEdit2"
                         title="Editer"
                         shape="rounded"
                         type="button"
-                        class="remove"
+                        class="remove me-2"
                         [routerLink]="'/admin/serveurs/'+(serveur.id)+'/edit'"
                     ></button>
                     <button

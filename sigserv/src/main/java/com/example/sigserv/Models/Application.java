@@ -25,6 +25,7 @@ public class Application {
     private String adresseIp;
     private String port;
     private String URL;
+    private String dateDeploiement;
     private Instant createdAt;
     private Instant updatedAt;
 
@@ -45,8 +46,13 @@ public class Application {
 
 
 
-    @OneToMany
-    private List<Tags> tags = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name="applications_tags",
+            joinColumns=@JoinColumn(name="application_id"),
+            inverseJoinColumns=@JoinColumn(name="tags_id")
+    )
+    @JsonIgnoreProperties(value = {"serveurs","applications","tags","comptedacces"},allowSetters = true)
+    private Set<Tags> tags =  new HashSet<>();
 
     @PrePersist
     public  void onCreate(){
@@ -71,7 +77,7 @@ public class Application {
         return nom;
     }
 
-    public Application(Long id, String nom, String adresseIp, String port, String URL, Instant createdAt, Instant updatedAt, Type type, Etat etat, Set<Serveur> serveurs, List<Tags> tags) {
+    public Application(Long id, String nom, String adresseIp, String port, String URL, Instant createdAt, Instant updatedAt, Type type, Etat etat, Set<Serveur> serveurs, Set<Tags> tags) {
         this.id = id;
         this.nom = nom;
         this.adresseIp = adresseIp;
@@ -83,6 +89,9 @@ public class Application {
         this.etat = etat;
         this.serveurs = serveurs;
         this.tags = tags;
+    }
+
+    public Application() {
     }
 
     public void setNom(String nom) {
@@ -153,11 +162,11 @@ public class Application {
         this.serveurs = serveurs;
     }
 
-    public List<Tags> getTags() {
+    public Set<Tags> getTags() {
         return tags;
     }
 
-    public void setTags(List<Tags> tags) {
+    public void setTags(Set<Tags> tags) {
         this.tags = tags;
     }
 }

@@ -1,7 +1,6 @@
 import {Component, Inject, Injector} from '@angular/core';
 import {Emplacement} from "../../../shareds/models/emplacement";
 import {EmplacementService} from "../../../shareds/services/emplacement.service";
-import {Application} from "../../../shareds/models/application";
 import {TuiAlertService, TuiDialogService} from "@taiga-ui/core";
 import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
 import {ConfirmationDeleteComponent} from "../../confirmation-delete/confirmation-delete.component";
@@ -22,7 +21,7 @@ export class ListeComponent {
   }
   search = '';
 
-  readonly columns = ['nom', 'couloir','armoire','etagere','createdAt','actions'];
+  readonly columns = ['datacenter', 'couloir','armoire','etagere','createdAt','actions'];
   emplacements : readonly Emplacement[]=[];
 
   ngOnInit() {

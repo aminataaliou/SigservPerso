@@ -2,6 +2,7 @@ package com.example.sigserv.Controllers;
 
 
 import com.example.sigserv.Models.Emplacement;
+import com.example.sigserv.Models.Serveur;
 import com.example.sigserv.Models.Tags;
 import com.example.sigserv.Services.EmplacementService;
 import com.example.sigserv.Services.TagsService;
@@ -27,6 +28,16 @@ public class TagsController {
     @GetMapping("/tags/{id}")
     public ResponseEntity<Tags> findOneById(@PathVariable Long id){
         return ResponseEntity.of(tagsService.findOneById(id));
+    }
+
+    @GetMapping("/tags/tags-application/{id}")
+    public ResponseEntity<List<Tags>> findTagsByApplicationId(@PathVariable Long id){
+        return ResponseEntity.ok(tagsService.findTagsByApplicationId(id));
+    }
+
+    @GetMapping("/tags/tags-serveur/{id}")
+    public ResponseEntity<List<Tags>> findTagsByServeurId(@PathVariable Long id){
+        return ResponseEntity.ok(tagsService.findTagsByServeurId(id));
     }
 
     @PostMapping("/tags")

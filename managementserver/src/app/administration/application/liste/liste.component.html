@@ -95,13 +95,7 @@
                 Date de Création
                  </th>
 
-                <th
-                    *tuiHead="'tags'"
-                    tuiTh
-                    [sorter]="null"
-                >
-                    Tags
-                </th>
+
                 <th
                     *tuiHead="'actions'"
                     tuiTh
@@ -164,17 +158,6 @@
                 <div [class]="application.createdAt">{{ application.createdAt | date :'short' }}</div>
                 </td>
 
-                <td
-                    *tuiCell="'tags'"
-                    tuiTd
-                >
-                    <tui-tag
-                        *ngFor="let tag of application.tags"
-                        class="tui-space_right-1"
-                        [value]="tag.nom"
-                        [autoColor]="true"
-                    ></tui-tag>
-                </td>
                 <td
                     *tuiCell="'actions'"
                     tuiTd

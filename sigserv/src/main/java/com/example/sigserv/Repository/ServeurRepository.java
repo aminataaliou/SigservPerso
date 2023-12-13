@@ -20,8 +20,8 @@ public interface ServeurRepository extends JpaRepository<Serveur,Long> {
     @Query(value = "select  s.* from comptedacces compte inner join serveurs_comptedacces sc on compte.id = sc.comptedacces_id inner join serveur s on sc.serveur_id = s.id where s.id= :idComptedacces",nativeQuery=true)
     List<Serveur> findServeurByComptedaccesId( Long idComptedacces);
 
-    @Query(value="select serv from serveur serv inner join serveur_serveurs ss on serv.id = ss.serveur_id where serv.id = :idServeurvirtuel",nativeQuery=true)
-    List<Serveur> findServeurVirtuelByServeurId( Long idServeurvirtuel);
+    @Query(value="select serv.* from serveur serv inner join serveur_serveurs ss on serv.id = ss.serveur_id where ss.serveur_id = :idServeurvirtuel",nativeQuery=true)
+    List<Serveur> findServeurVirtuelByServeurId(Long idServeurvirtuel);
 
     @Query(value="select  sys.* from systeme sys inner join systeme_serveurs ss on sys.id = ss.systeme_id inner join serveur s on ss.serveurs_id = s.id where s.id= :idServeur",nativeQuery=true)
     List<Serveur> findServeurBySystemeId(@Param("idServeur") Long idServeur);

@@ -10,6 +10,7 @@ import { NouveauComponent } from './nouveau/nouveau.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiTableModule } from '@taiga-ui/addon-table';
 import { ALL_TAIGA_UI_MODULES } from 'src/app/all_taiga.module';
+import {TuiStringifyPipeModule} from "@taiga-ui/kit";
 
 
 @NgModule({
@@ -26,10 +27,11 @@ import { ALL_TAIGA_UI_MODULES } from 'src/app/all_taiga.module';
     ALL_TAIGA_UI_MODULES,
     TuiTableModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TuiStringifyPipeModule,
   ],
 
   schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],
-  
+
 })
 export class ApplicationModule { }

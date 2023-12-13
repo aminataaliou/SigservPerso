@@ -10,6 +10,7 @@ import { ApplicationService } from 'src/app/shareds/services/application.service
 import { ServeurService } from 'src/app/shareds/services/serveur.service';
 import { TagsService } from 'src/app/shareds/services/tags.service';
 import {Etat} from "../../../shareds/models/etat";
+import {TuiDay} from "@taiga-ui/cdk";
 
 
 
@@ -28,6 +29,7 @@ export class NouveauComponent implements OnInit{
     type: new FormControl(``, Validators.required),
     port: new FormControl(``, Validators.required),
     etat: new FormControl(``, Validators.required),
+    dateDeploiement: new FormControl(new TuiDay(2017, 2, 15)),
 
   });
   types : string[] = Object.keys(Type);

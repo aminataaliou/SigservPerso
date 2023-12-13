@@ -3,6 +3,7 @@ package com.example.sigserv.Services;
 import com.example.sigserv.Models.Application;
 import com.example.sigserv.Models.Datacenter;
 import com.example.sigserv.Models.Serveur;
+import com.example.sigserv.Models.Tags;
 import com.example.sigserv.Repository.ApplicationRepository;
 import com.example.sigserv.Repository.DatacenterRepository;
 import com.example.sigserv.config.BadAlertRequest;
@@ -47,6 +48,14 @@ public class ApplicationService {
                     applicationRepository.save(application);
                     return  application;
                 }).orElseThrow(() -> new BadAlertRequest("Ce serveur n'existe plus !"));
+    }
+    public Application addTagsToApplicationById(Long idApplication, Set<Tags> tags){
+        return applicationRepository.findById(idApplication)
+                .map(application -> {
+                    application.setTags(tags);
+                    applicationRepository.save(application);
+                    return  application;
+                }).orElseThrow(() -> new BadAlertRequest("Ce tags n'existe plus !"));
     }
     public void delete(Long id){
         applicationRepository.deleteById(id);

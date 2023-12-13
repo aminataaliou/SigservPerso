@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject, Injector} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, Injector, ViewEncapsulation} from '@angular/core';
 import { TUI_DEFAULT_MATCHER } from '@taiga-ui/cdk';
 import {TuiAlertService, TuiDialogContext, TuiDialogService} from '@taiga-ui/core';
 import { TUI_ARROW } from '@taiga-ui/kit';
@@ -15,10 +15,11 @@ import {ConfirmationDeleteComponent} from "../../confirmation-delete/confirmatio
   selector: 'app-liste',
   templateUrl: './liste.component.html',
   styleUrls: ['./liste.component.less'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ListeComponent {
 
-  readonly columns = ['nom', 'type', 'etat', 'adresseip', 'systeme', 'tags', 'createdAt', 'actions'];
+  readonly columns = ['nom', 'type', 'etat', 'adresseip', 'systeme', 'createdAt', 'actions'];
   serveurs: readonly Serveur[] = [];
   search = '';
 

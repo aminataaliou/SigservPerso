@@ -10,6 +10,6 @@ export class Emplacement{
   datacenter: Datacenter | undefined | null
 
   toString(): string {
-    return `Datacenter: ${this.datacenter} |Armoire: ${this.armoire} | Couloir: ${this.couloir} | Etagère: ${this.etagere}`;
+    return `Datacenter: ${this.datacenter?.nom}| Armoire: ${this.armoire} | Couloir: ${this.couloir} | Etagère: ${this.etagere}`;
   }
 }

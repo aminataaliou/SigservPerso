@@ -4,6 +4,8 @@ import {Observable} from "rxjs";
 import {Serveur} from "../models/serveur";
 import {environment} from "../../../environments/environment";
 import {Application} from "../models/application";
+import {Tags} from "../models/tags";
+import {Comptedacces} from "../models/comptedacces";
 
 
 @Injectable({providedIn: 'root'})
@@ -39,6 +41,12 @@ export class ServeurService {
 
   addApplicationsToServerById(serveur:Serveur,applications:Application[]): Observable<HttpResponse<Serveur>>{
     return this.http.post<Serveur>(`${this.END_POINT}/add-application/${serveur.id}`,applications,{observe: "response"});
+  }
+  addComptesToServerById(serveur:Serveur,comptedacces:Comptedacces[]): Observable<HttpResponse<Serveur>>{
+    return this.http.post<Serveur>(`${this.END_POINT}/add-compte-acces/${serveur.id}`,comptedacces,{observe: "response"});
+  }
+  addTagsToServerById(serveur:Serveur,tags:Tags[]): Observable<HttpResponse<Serveur>>{
+    return this.http.post<Serveur>(`${this.END_POINT}/add-tags/${serveur.id}`,tags,{observe: "response"});
   }
 
   addServeursToServerById(serveur:Serveur,serveurs:Serveur[]): Observable<HttpResponse<Serveur>>{

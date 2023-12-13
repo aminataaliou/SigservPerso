@@ -6,6 +6,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ServeurService} from "../../../shareds/services/serveur.service";
 import {Serveur} from "../../../shareds/models/serveur";
 import {FormBuilder} from "@angular/forms";
+import {Tags} from "../../../shareds/models/tags";
+import {TagsService} from "../../../shareds/services/tags.service";
 
 
 
@@ -30,12 +32,18 @@ export class DetailComponent implements OnInit {
   id:number | undefined;
   application: Application | undefined;
 
+  readonly columnstags = ['nom', 'createdAt'];
+ tagsByApplicationId: readonly Tags[] = [];
+  tag:Tags | undefined;
+  open1=false;
+  tags:readonly Tags[];
+  readonly stringifyTags = (tags: Tags): string => `Nom: ${tags.nom} `;
+
   serveurByApplicationId: readonly Serveur[] = [];
   readonly columnsServeur = ['nom', 'etat', 'adresseip', 'systeme', 'createdAt'];
 
   serveurs: readonly Serveur[] =[];
   readonly stringifyServeur = (serveur: Serveur): string => `Nom: ${serveur.nom} | Etat: ${serveur.etat} | Adresse IP: ${serveur.adresseip} | Systeme: ${serveur.systeme}   | CreatedAt: ${serveur.createdAt}`;
-  value: Serveur[] = [];
   open=false;
   readonly items = [
     {
@@ -46,7 +54,18 @@ export class DetailComponent implements OnInit {
       text: 'Serveurs',
       icon: 'tuiIconServer',
     },
+    {
+      text: 'Tags',
+      icon: 'tuiIconTag',
+    },
   ];
+
+  serveurForm = this.fb.group({
+    serveurs: [],
+  });
+  tagForm = this.fb.group({
+   tags:[],
+  })
 
   ngOnInit(): void {
     this.activatedroute.params.subscribe((params) =>{
@@ -54,7 +73,9 @@ export class DetailComponent implements OnInit {
         this.id=params['id'];
         this.findApplicationById(this.id!);
         this.findAllServeur();
-        this.findServeurByApplicationId(this.id!)
+        this.findServeurByApplicationId(this.id!);
+        this.findAllTags();
+        this.findTagsByApplicationId(this.id!)
       }
     })
     console.log("data======",this.id);
@@ -65,7 +86,8 @@ export class DetailComponent implements OnInit {
     private activatedroute: ActivatedRoute,
     protected router: Router,
     private serveurService:ServeurService,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    private tagsService:TagsService
   ) {}
 
 
@@ -101,9 +123,7 @@ export class DetailComponent implements OnInit {
   showDialogServeur(): void {
     this.open = true;
   }
-  serveurForm = this.fb.group({
-    serveurs: [],
-  });
+
   serveurSubmit(){
     console.log(" APPLI SERV SUBMIT",this.serveurForm.get('serveurs')?.value);
     const serveurs: Serveur[] = this.serveurForm.get('serveurs')?.value;
@@ -116,6 +136,47 @@ export class DetailComponent implements OnInit {
             serveurs: []
           })
           this.findServeurByApplicationId(this.application.id);
+        },
+        (err)=>{
+          console.log("Erreur lors de la sauvegarde",err);
+        }
+      )
+  }
+
+  showDialogTags(): void {
+    this.open1 = true;
+  }
+
+  findAllTags(): void{
+    this.tagsService.query().subscribe(
+      (res)=> {
+        console.log("TAGS");
+        this.tags = res.body ?? [];
+      }
+    )
+  }
+
+  findTagsByApplicationId(id:number):void{
+    this.tagsService.findTagsByApplicationId(id).subscribe(
+      (res) => {
+        console.log("TagsByApplicationId",res.body);
+        this.tagsByApplicationId = res.body ?? [];
+      },
+      (err)=>{}
+    )
+  }
+  tagsSubmit(){
+    console.log(" APPLI TAGS SUBMIT",this.tagForm.get('tags')?.value);
+    const tags: Tags[] = this.tagForm.get('tags')?.value;
+    this.applicationService.addTagsToApplicationById(this.application, tags)
+      .subscribe(
+        (res) => {
+          console.log("Savegarder avec succès",res);
+          this.open1 = false;
+          this.tagForm.patchValue({
+            tags: []
+          })
+          this.findTagsByApplicationId(this.application.id);
         },
         (err)=>{
           console.log("Erreur lors de la sauvegarde",err);

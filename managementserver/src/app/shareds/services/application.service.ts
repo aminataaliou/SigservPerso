@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {environment} from "../../../environments/environment";
 import { Application } from '../models/application';
 import {Serveur} from "../models/serveur";
+import {Tags} from "../models/tags";
 
 
 @Injectable({providedIn: 'root'})
@@ -39,6 +40,9 @@ export class ApplicationService {
   }
   addServeursToApplicationById(application:Application,serveurs:Serveur[]): Observable<HttpResponse<Application>>{
     return this.http.post<Application>(`${this.END_POINT}/add-serveur/${application.id}`,serveurs,{observe: "response"});
+  }
+  addTagsToApplicationById(application:Application,tags:Tags[]): Observable<HttpResponse<Application>>{
+    return this.http.post<Application>(`${this.END_POINT}/add-tags/${application.id}`,tags,{observe: "response"});
   }
 }
 
