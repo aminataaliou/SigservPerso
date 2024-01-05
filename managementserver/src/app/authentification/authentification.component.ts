@@ -16,8 +16,7 @@ export class AuthentificationComponent {
 
     password : new FormControl("",
               [ Validators.required,
-                Validators.minLength(5),
-                Validators.maxLength(9)])
+             ])
   });
 
   constructor(
