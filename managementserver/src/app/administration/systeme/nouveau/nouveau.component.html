@@ -9,43 +9,49 @@
        <h6> Nom</h6>
        <tui-input tuiTextfieldSize="m" formControlName="nom">
            Entrez le nom du systeme!
-       <input  tuiTextfield type="Field placeholder" class="form-control" name="nom"/>  
+       <input  tuiTextfield type="Field placeholder" class="form-control" name="nom"/>
        </tui-input>
    </div>
     <div class="mt-2">
        <h6> Version</h6>
        <tui-input tuiTextfieldSize="m" formControlName="version">
            Entrez la version!
-       <input  tuiTextfield type="Field placeholder" class="form-control" name="version"/>  
+       <input  tuiTextfield type="Field placeholder" class="form-control" name="version"/>
        </tui-input>
     </div>
     <div class="mt-2">
         <h6> Distribution</h6>
         <tui-input tuiTextfieldSize="m" formControlName="distribution">
             Entrez la distribution!
-        <input  tuiTextfield type="Field placeholder" class="form-control" name="distribution"/>  
+        <input  tuiTextfield type="Field placeholder" class="form-control" name="distribution"/>
         </tui-input>
     </div>
     <div class="mt-2">
        <h6> Tags</h6>
        <tui-multi-select placeholder="text" class="b-form" formControlName="tags"
-       [tuiTextfieldLabelOutside]="true" [editable]="true" [tagValidator]="tagValidator" [(search)]="search" >
+       [tuiTextfieldLabelOutside]="true" [editable]="true"  [(search)]="search"  [valueContent]="contentTags"
+                         [stringify]="stringifyTags">
             Choississez tags!
-       <tui-data-list-wrapper *tuiDataList tuiMultiSelectGroup  [items]="filter(search)"></tui-data-list-wrapper>
+       <tui-data-list-wrapper *tuiDataList tuiMultiSelectGroup  [items]="tags"
+                              [itemContent]="contentTags"></tui-data-list-wrapper>
        </tui-multi-select>
+      <ng-template #contentTags let-tags>
+        <div class="template">
+          <div class="tags">  {{tags?.nom}} </div>
+        </div>
+      </ng-template>
     </div>
    <div class="tui-form__buttons">
-    <button tuiButton type="button" appearance="secondary-destructive" size="l" routerLink="/admin/systemes/liste" 
+    <button tuiButton type="button" appearance="secondary-destructive" size="l" routerLink="/admin/systemes/liste"
     class="tui-form__button">
     Annuler
 </button>
     <button tuiButton size="l" type="submit" [disabled]="sysForm.invalid"
        appearance="accent"  class="tui-form__button" >
            Soumettre
-       </button> 
+       </button>
    </div>
 </form>
 </div>
 
 
-   

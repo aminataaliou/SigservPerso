@@ -4,9 +4,11 @@ package com.example.sigserv.Controllers;
 import com.example.sigserv.Models.Application;
 import com.example.sigserv.Models.Serveur;
 import com.example.sigserv.Models.Tags;
+import com.example.sigserv.Models.Utilisateur;
 import com.example.sigserv.Services.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +22,7 @@ public class ApplicationController {
     ApplicationService applicationService;
 
     @GetMapping("/applications")
+    @PreAuthorize("hasAuthority('PROFIL_DEVELOPPEUR')")
     public ResponseEntity<List<Application>> getAll(){
         return ResponseEntity.ok(applicationService.getAll());
     }
@@ -40,6 +43,7 @@ public class ApplicationController {
         System.out.println(application);
         return ResponseEntity.ok(applicationService.create(application));
     }
+
 
     @PostMapping("/applications/add-serveur/{id}")
     public ResponseEntity<Application> addServeursToApplicationById(@PathVariable Long id,@RequestBody Set<Serveur> serveurs){

@@ -1,20 +1,25 @@
 package com.example.sigserv.Services;
 
-import com.example.sigserv.Models.Datacenter;
 import com.example.sigserv.Models.Utilisateur;
-import com.example.sigserv.Repository.DatacenterRepository;
 import com.example.sigserv.Repository.UtilisateurRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UtilisateurService {
+public class UtilisateurService{
 
-    @Autowired
-    UtilisateurRepository utilisateurRepository;
+
+    private final UtilisateurRepository utilisateurRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
+    public UtilisateurService(UtilisateurRepository utilisateurRepository, PasswordEncoder passwordEncoder) {
+        this.utilisateurRepository = utilisateurRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public List<Utilisateur> getAll() {
         return utilisateurRepository.findAll();
@@ -24,7 +29,12 @@ public class UtilisateurService {
         return utilisateurRepository.findById(id);
     }
 
+    public Optional<Utilisateur> findOneByUsername(String username){
+        return utilisateurRepository.findByUsername(username);
+    }
+
     public Utilisateur create(Utilisateur utilisateur){
+        utilisateur.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
         return utilisateurRepository.save(utilisateur);
     }
 
@@ -35,4 +45,5 @@ public class UtilisateurService {
     public void delete(Long id){
         utilisateurRepository.deleteById(id);
     }
+
 }

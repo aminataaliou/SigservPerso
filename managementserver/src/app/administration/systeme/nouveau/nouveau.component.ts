@@ -6,7 +6,7 @@ import { Systeme } from 'src/app/shareds/models/systeme';
 import { Tags } from 'src/app/shareds/models/tags';
 import { SystemeService } from 'src/app/shareds/services/systeme.service';
 import { TagsService } from 'src/app/shareds/services/tags.service';
- 
+
 
 
 @Component({
@@ -17,7 +17,7 @@ import { TagsService } from 'src/app/shareds/services/tags.service';
 })
 export class NouveauComponent implements OnInit{
 
-  sysForm = new FormGroup({ 
+  sysForm = new FormGroup({
     nom: new FormControl(``, Validators.required),
     version: new FormControl(``, Validators.required),
     distribution: new FormControl(``, Validators.required),
@@ -25,6 +25,7 @@ export class NouveauComponent implements OnInit{
   });
 
   tags:Tags [] = [];
+  readonly stringifyTags = (tags: Tags): string => ` ${tags.nom} `;
 
   constructor(
     protected router: Router,
@@ -49,12 +50,11 @@ export class NouveauComponent implements OnInit{
   }
 
   search: string | null = '';
- 
+
     @tuiPure
     filter(search: string | null): Tags[] {
         return this.tags.filter(tags => TUI_DEFAULT_MATCHER(tags, search || ''));
     }
-    tagValidator: TuiBooleanHandler<string> = tag => !tag.startsWith('Han');
 
     sysSubmited (){
       console.log(this.sysForm.value);
@@ -71,7 +71,7 @@ export class NouveauComponent implements OnInit{
         }
       )
     }
-    
+
     createForm(): Systeme | undefined {
       const systeme = new Systeme();
        return {
@@ -80,6 +80,7 @@ export class NouveauComponent implements OnInit{
          nom: this.sysForm.get("nom")?.value,
          version: this.sysForm.get("version")?.value,
          distribution: this.sysForm.get("distribution")?.value,
+         tags: this.sysForm.get("tags")?.value,
          serveurs: null,
          createdAt:  null,
          updatedAt:  null

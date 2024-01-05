@@ -1,13 +1,12 @@
 package com.example.sigserv.Services;
 
-import com.example.sigserv.Models.Application;
-import com.example.sigserv.Models.Datacenter;
-import com.example.sigserv.Models.Serveur;
-import com.example.sigserv.Models.Tags;
+import com.example.sigserv.Models.*;
 import com.example.sigserv.Repository.ApplicationRepository;
 import com.example.sigserv.Repository.DatacenterRepository;
+import com.example.sigserv.Repository.UtilisateurRepository;
 import com.example.sigserv.config.BadAlertRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -60,4 +59,5 @@ public class ApplicationService {
     public void delete(Long id){
         applicationRepository.deleteById(id);
     }
+
 }
