@@ -1,4 +1,4 @@
 export class Authentification{
-    login: string | undefined | null
+    username: string | undefined | null
     password: string | undefined | null
 }
