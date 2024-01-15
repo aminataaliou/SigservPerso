@@ -34,8 +34,8 @@ public class EmplacementService {
     }
 
     public List<Emplacement> findEmplacementByDatacenterId(Long id){
-        List<Emplacement> emplacementByDatacenterId = emplacementRepository.findEmplacementByDatacenterId(id);
-        return emplacementByDatacenterId;
+//        List<Emplacement> emplacementByDatacenterId = emplacementRepository.findEmplacementByDatacenterId(id);
+        return emplacementRepository.findEmplacementByDatacenterId(id);
     }
     public void delete(Long id){
         emplacementRepository.deleteById(id);

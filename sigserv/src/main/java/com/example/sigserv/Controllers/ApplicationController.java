@@ -22,7 +22,6 @@ public class ApplicationController {
     ApplicationService applicationService;
 
     @GetMapping("/applications")
-    @PreAuthorize("hasAuthority('PROFIL_DEVELOPPEUR')")
     public ResponseEntity<List<Application>> getAll(){
         return ResponseEntity.ok(applicationService.getAll());
     }

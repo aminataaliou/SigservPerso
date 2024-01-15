@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface EmplacementRepository extends JpaRepository<Emplacement,Long> {
 
-@Query(value="select empla.* from emplacement empla inner join datacenter_emplacements de on empla.id = de.emplacements_id inner join datacenter data on de.datacenter_id = data.id where data.id= :idDatacenter\n",nativeQuery=true)
-    List<Emplacement> findEmplacementByDatacenterId(Long idDatacenter);
+@Query(value="select data.* from datacenter data inner join datacenter_emplacements de on data.id = de.datacenter_id inner join emplacements empl on de.emplacements_id = empl.id where empl.id= :idEmplacements\n",nativeQuery=true)
+    List<Emplacement> findEmplacementByDatacenterId(Long idEmplacements);
 }

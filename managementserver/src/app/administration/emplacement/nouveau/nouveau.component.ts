@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EmplacementService} from "../../../shareds/services/emplacement.service";
 import {Emplacement} from "../../../shareds/models/emplacement";
@@ -12,10 +12,10 @@ import {Systeme} from "../../../shareds/models/systeme";
   templateUrl: './nouveau.component.html',
   styleUrls: ['./nouveau.component.less']
 })
-export class NouveauComponent {
+export class NouveauComponent implements OnInit{
 
   datacenter:Datacenter[]
-  readonly stringifyDatacenter = (datacenter: Datacenter): string => `Nom: ${datacenter.nom} `;
+  readonly stringifyDatacenter = (datacenter: Datacenter): string => ` ${datacenter.nom} `;
 
 
   emplForm = new FormGroup({
@@ -25,6 +25,10 @@ export class NouveauComponent {
     etagere: new FormControl(``, Validators.required),
 
   })
+
+  ngOnInit(): void {
+    this.findAllDatacenter();
+  }
 
   constructor(
     private emplacementService: EmplacementService,
@@ -71,4 +75,6 @@ export class NouveauComponent {
       id: null,
     };
   }
+
+
 }
