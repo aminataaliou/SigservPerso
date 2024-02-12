@@ -3,8 +3,11 @@ package com.example.sigserv.Services;
 import com.example.sigserv.Models.Application;
 import com.example.sigserv.Models.Datacenter;
 import com.example.sigserv.Models.Emplacement;
+import com.example.sigserv.Models.Serveur;
 import com.example.sigserv.Repository.DatacenterRepository;
 import com.example.sigserv.Repository.EmplacementRepository;
+import com.example.sigserv.Repository.ServeurRepository;
+import com.example.sigserv.config.BadAlertRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,10 @@ public class EmplacementService {
 
     @Autowired
     EmplacementRepository emplacementRepository;
+
+    @Autowired
+    private ServeurRepository serveurRepository;
+
 
     public List<Emplacement> getAll() {
         return emplacementRepository.findAll();
@@ -38,6 +45,18 @@ public class EmplacementService {
         return emplacementRepository.findEmplacementByDatacenterId(id);
     }
     public void delete(Long id){
-        emplacementRepository.deleteById(id);
+        emplacementRepository.findById(id).ifPresentOrElse(emplacement -> {
+            List<Serveur> serveurs = serveurRepository.findServeurByEmplacementId(emplacement.getId());
+            System.out.println("SERVEURS : "+serveurs);
+            serveurs.forEach(serveur -> {
+                serveur.setEmplacement(null);
+                serveurRepository.save(serveur);
+                serveurRepository.deleteById(serveur.getId());
+            });
+            emplacement.setDatacenter(null);
+            emplacement.setServeurs(null);
+            emplacementRepository.save(emplacement);
+            emplacementRepository.deleteById(id);
+            },() -> new BadAlertRequest("Cet emplacement n'existe plus !"));
     }
 }

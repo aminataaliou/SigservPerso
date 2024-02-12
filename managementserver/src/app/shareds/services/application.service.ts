@@ -28,7 +28,7 @@ export class ApplicationService {
   }
 
   update (application: Application): Observable<HttpResponse<Application>>{
-    return this.http.put<Application>(`${this.END_POINT}/${application.id}`,application,{observe: "response"});
+    return this.http.put<Application>(`${this.END_POINT}`,application,{observe: "response"});
   }
 
   findById( id:number) : Observable<HttpResponse<Application>>{

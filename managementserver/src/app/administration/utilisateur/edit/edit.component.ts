@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { Utilisateur } from 'src/app/shareds/models/utilisateur';
 import { UtilisateurService } from 'src/app/shareds/services/utilisateur.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder} from "@angular/forms";
 import {Profil} from "../../../shareds/models/profil";
-import {Serveur} from "../../../shareds/models/serveur";
 
 @Component({
   selector: 'app-edit',
@@ -23,6 +22,10 @@ export class EditComponent implements OnInit {
     email: [],
     profil:[],
     id:[],
+    username:[],
+    password:[],
+    createdAt: [],
+    updatedAt: [],
   });
 
   constructor(
@@ -37,30 +40,26 @@ export class EditComponent implements OnInit {
       (Params) => {
         if(Params['id']){
           this.findUtilisateurById(Number.parseInt((Params['id'])))
-        }
-      }
-    )
-  }
+        }}
+    )}
 
   updateForm(utilisateur: Utilisateur){
-
     console.log("Before Update")
     console.log(utilisateur)
-
-
     this.utiForm.patchValue({
       id:utilisateur.id,
       nom: utilisateur.nom,
       prenom: utilisateur.prenom,
       email: utilisateur.email,
       profil: utilisateur.profil,
-
+      username: utilisateur.username,
+      password: utilisateur.password,
+      createdAt: utilisateur.createdAt,
+      updatedAt: utilisateur.updatedAt
     })
-
     console.log("After Update")
     console.log(this.utiForm.value)
   }
-
 
   findUtilisateurById(id:number) {
     this.utilisateurService.findById(id).subscribe(
@@ -74,9 +73,25 @@ export class EditComponent implements OnInit {
     this.updateForm(this.utilisateur!)
   }
 
+  createForm(): Utilisateur | undefined {
+    return {
+      ...new Utilisateur(),
+      id: this.utiForm.get("id")?.value,
+      nom: this.utiForm.get("nom")?.value,
+      prenom: this.utiForm.get("prenom")?.value,
+      email : this.utiForm.get("email")?.value,
+      profil: this.utiForm.get("profil").value,
+      createdAt:  this.utiForm.get("createdAt").value,
+      updatedAt:  this.utiForm.get("updatedAt").value,
+      username:  this.utiForm.get("username").value,
+      password:  this.utiForm.get("password").value,
+    }
+  }
+
   utiSubmited(){
     console.log("UTILISATEURRRRRS",this.utiForm)
-    this.utilisateurService.update(this.utilisateur)
+    const utilisateur :Utilisateur=this.createForm();
+    this.utilisateurService.update(utilisateur)
       .subscribe(
         (res) => {
           console.log("mise à jour effectué avec succès",res);

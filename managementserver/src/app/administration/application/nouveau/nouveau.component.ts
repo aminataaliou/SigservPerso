@@ -94,7 +94,7 @@ export class NouveauComponent implements OnInit{
   }
 
   createForm(): Application | undefined {
-    const serveur = new Application();
+    const application = new Application();
      return {
        ...new Application(),
        id: this.appliForm.get("id")?.value,

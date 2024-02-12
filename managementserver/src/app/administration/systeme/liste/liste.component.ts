@@ -14,7 +14,6 @@ import {ConfirmationDeleteComponent} from "../../confirmation-delete/confirmatio
   selector: 'app-liste',
   templateUrl: './liste.component.html',
   styleUrls: ['./liste.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListeComponent {
 
@@ -23,7 +22,6 @@ export class ListeComponent {
   systemes: readonly Systeme[] = [];
 
     search = '';
-
 
 
   constructor(
@@ -43,6 +41,8 @@ export class ListeComponent {
     .subscribe(
       (res) => {
         this.systemes = res.body ?? [];
+        this.alerts
+          .open(`Vous avez ${this.systemes.length} systemes`).subscribe()
       },
       (err)=>{
 
@@ -80,11 +80,11 @@ export class ListeComponent {
           this.query();
         },
         (err) => {
-          this.alerts.open(`Une erreur s'est produite lors de la suppression du systeme <<${systeme.nom}>>`);
+          this.alerts.open(`Une erreur s'est produite lors de la suppression du systeme << ${systeme.nom} >>`);
 
         }
       );
-    this.alerts.open(`le systeme <<${systeme.nom}>> a été supprimé avec succès`,{
+    this.alerts.open(`Le systeme << ${systeme.nom} >> a été supprimé avec succès`,{
       status: 'success'
     }).subscribe();
   }

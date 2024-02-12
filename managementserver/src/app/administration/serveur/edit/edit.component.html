@@ -3,7 +3,7 @@
        Mise à Jour Du Serveur
         <code tuiText=".tui-space(top, <value>);"></code>
     </h2>
-<form [formGroup]="serveurForm" class="col-md-8" (ngSubmit)="servSubmited">
+<form [formGroup]="serveurForm" class="col-md-8" (ngSubmit)="servSubmited()">
 
      <div class="row g-3">
          <div class="col-md-6 mt-5">
@@ -87,7 +87,7 @@
            </tui-combo-box>
            <ng-template #contentEmplacement let-emplacement>
              <div class="template">
-               <div class="armoire"> Armoire: {{emplacement?.armoire}} | Couloir: {{emplacement?.couloir}} | Etagère: {{emplacement?.etagere}}</div>
+               <div class="armoire"> Nom:{{emplacement?.datacenter?.nom}} | Armoire: {{emplacement?.armoire}} | Couloir: {{emplacement?.couloir}} | Etagère: {{emplacement?.etagere}}</div>
              </div>
            </ng-template>
          </div>

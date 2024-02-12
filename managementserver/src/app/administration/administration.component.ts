@@ -1,6 +1,7 @@
 import { Component, OnInit ,ChangeDetectionStrategy } from '@angular/core';
 import { AppbarService } from '../shareds/services/appbar.service';
 import { TuiSizeL, TuiSizeS } from '@taiga-ui/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-administration',
@@ -15,7 +16,8 @@ export class AdministrationComponent implements OnInit {
   size: TuiSizeL | TuiSizeS = 's';
 
   constructor(
-    private appbarService: AppbarService
+    private appbarService: AppbarService,
+    private router: Router
   ){}
 
   ngOnInit(): void {
@@ -28,6 +30,10 @@ export class AdministrationComponent implements OnInit {
 
   onDropdownOpen():void {
     this.dropdownOpen = !this.dropdownOpen;
+    setTimeout(()=>{
+      localStorage.removeItem("authenticationToken");
+      this.router.navigateByUrl("/").then();
+    },600);
   }
 
 

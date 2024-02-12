@@ -94,11 +94,31 @@ export class DetailComponent implements OnInit{
       (err)=>{}
     )
   }
-  serveurSubmit(){}
+
   showDialogServeur(): void {
     this.open = true;
   }
-  serveurForm = this.fb.group({
+  serveurSystemForm = this.fb.group({
     serveurs: [],
   });
+
+  serveurSubmit(){
+    // console.log(" Serveur Compte SUBMIT",this.serveurSystemForm.get('serveurs')?.value);
+    // const serveur: Serveur []= this.serveurSystemForm.get('serveurs')?.value;
+    // this.systemeService.addServeurToSystemesById(this.systeme, serveur)
+    //   .subscribe(
+    //     (res) => {
+    //       console.log("Savegarder avec succès",res);
+    //       this.open = false;
+    //       this.serveurSystemForm.patchValue({
+    //         serveurs: []
+    //       })
+    //       this.findServeurBySystemeId(this.systeme.id);
+    //     },
+    //     (err)=>{
+    //       console.log("Erreur lors de la sauvegarde",err);
+    //     }
+    //   )
+  }
+
 }

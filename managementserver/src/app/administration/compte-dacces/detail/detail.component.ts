@@ -58,12 +58,12 @@ export class DetailComponent implements OnInit{
       if(params['id']){
         this.id=params['id'];
         this.findComptedaccesById(this.id!);
-        this.findServeurByCompteId(this.id!)
+        this.findServeurByCompteId(this.id!);
+        this.findAllServeur();
       }
     })
     console.log("data======",this.id);
   }
-
 
   findComptedaccesById(id:number){
     this.comptedaccesService.findById(id).subscribe(
@@ -102,5 +102,22 @@ export class DetailComponent implements OnInit{
     serveurs: [],
   });
 
-  serveurSubmit(){}
+  serveurSubmit(){
+    console.log(" COMPTE SERV SUBMIT",this.serveurForm.get('serveurs')?.value);
+    const serveurs: Serveur[] = this.serveurForm.get('serveurs')?.value;
+    this.comptedaccesService.addServeursToComptedaccesById(this.comptedacces, serveurs)
+      .subscribe(
+        (res) => {
+          console.log("Savegarder avec succès",res);
+          this.open = false;
+          this.serveurForm.patchValue({
+            serveurs: []
+          })
+          this.findServeurByCompteId(this.comptedacces.id);
+        },
+        (err)=>{
+          console.log("Erreur lors de la sauvegarde",err);
+        }
+      )
+  }
 }

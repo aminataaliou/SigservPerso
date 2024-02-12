@@ -72,14 +72,14 @@ export class ListeComponent {
     this.comptedaccesService.delete(comptedacces.id!)
       .subscribe(
         () => {
-          this.alerts.open(`le compte Accès <<${comptedacces.nom}>> a été supprimé avec succès`,{
+          this.alerts.open(`Le compte Accès << ${comptedacces.nom} >> a été supprimé avec succès`,{
             status: 'success'
           }).subscribe();
           this.query();
           console.log("----- END -----");
         },
         (err) => {
-          this.alerts.open(`Une erreur s'est produite lors de la suppression du compte <<${comptedacces.nom}>>`,{
+          this.alerts.open(`Une erreur s'est produite lors de la suppression du compte << ${comptedacces.nom} >>`,{
             status: 'warning'
           }).subscribe();
 

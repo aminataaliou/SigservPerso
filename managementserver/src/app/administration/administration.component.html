@@ -5,7 +5,7 @@
 <!-- APP BAR  -->
 
 <tui-app-bar class="bg-white shadow-sm position-fixed container-fluid d-flex justify-content-between top-0" style="height: 60px;">
-    
+
     <div tuiSlot="left" class="d-flex justify-content-center align-items-center">
         <button
         (click)="toggle(true)"
@@ -28,7 +28,7 @@
         class="me-é mt-1"
     />
     </div>
-    
+
 <div  tuiSlot="right">
 <tui-hosted-dropdown
     #dropdown
@@ -43,16 +43,15 @@
         tuiDataListDropdownManager
         [tuiActiveZoneParent]="activeZone"
         [size]="size">
-        <button tuiOption (click)="onDropdownOpen()">Paramètre</button>
-        <button tuiOption  (click)="onDropdownOpen()">Mot de passe</button>
-        <button tuiOption  (click)="onDropdownOpen()" routerLink="">Deconnexion</button>
+        <button tuiOption>Paramètre</button>
+        <button tuiOption>Mot de passe</button>
+        <button tuiOption  (click)="onDropdownOpen()" >Deconnexion</button>
     </tui-data-list>
 </ng-template>
 </div>
 
 
-</tui-app-bar> 
+</tui-app-bar>
 
 
 
-  

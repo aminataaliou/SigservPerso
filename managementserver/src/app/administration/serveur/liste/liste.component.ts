@@ -1,9 +1,5 @@
-import {ChangeDetectionStrategy, Component, Inject, Injector, ViewEncapsulation} from '@angular/core';
-import { TUI_DEFAULT_MATCHER } from '@taiga-ui/cdk';
-import {TuiAlertService, TuiDialogContext, TuiDialogService} from '@taiga-ui/core';
-import { TUI_ARROW } from '@taiga-ui/kit';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import {debounceTime, filter, map, share, startWith, switchMap} from 'rxjs/operators';
+import { Component, Inject, Injector, ViewEncapsulation} from '@angular/core';
+import {TuiAlertService, TuiDialogService} from '@taiga-ui/core';
 import { Serveur } from 'src/app/shareds/models/serveur';
 import { ServeurService } from 'src/app/shareds/services/serveur.service';
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus';
@@ -81,14 +77,14 @@ export class ListeComponent {
       this.serveurService.delete(serveur.id!)
         .subscribe(
           () => {
-            this.alerts.open(`le serveur <<${serveur.nom}>> a été supprimé avec succès`,{
+            this.alerts.open(`le serveur << ${serveur.nom} >> a été supprimé avec succès`,{
               status: 'success'
             }).subscribe();
               this.query();
             console.log("----- END -----");
           },
           (err) => {
-            this.alerts.open(`Une erreur s'est produite lors de la suppression du serveur <<${serveur.nom}>>`,{
+            this.alerts.open(`Une erreur s'est produite lors de la suppression du serveur ${serveur.nom}`,{
               status: 'warning'
             }).subscribe();
 

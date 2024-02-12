@@ -5,6 +5,7 @@ import {Serveur} from "../models/serveur";
 import {environment} from "../../../environments/environment";
 import { Comptedacces } from '../models/comptedacces';
 import {Application} from "../models/application";
+import {Tags} from "../models/tags";
 
 
 @Injectable({providedIn: 'root'})
@@ -27,7 +28,7 @@ export class ComptedaccesService {
   }
 
   update(comptedacces: Comptedacces): Observable<HttpResponse<Comptedacces>> {
-    return this.http.put<Comptedacces>(`${this.END_POINT}/${comptedacces.id}`,comptedacces,{observe: "response"});
+    return this.http.put<Comptedacces>(`${this.END_POINT}`,comptedacces,{observe: "response"});
   }
 
   findById(id: number): Observable<HttpResponse<Comptedacces>> {
@@ -36,5 +37,9 @@ export class ComptedaccesService {
 
   findComptedaccesByServeurId(id: number): Observable<HttpResponse<Comptedacces[]>> {
     return this.http.get<Comptedacces[]>(`${this.END_POINT}/compte-acces-serveurs/${id}`,{observe: "response"});
+  }
+
+  addServeursToComptedaccesById(comptedacces:Comptedacces,serveurs:Serveur[]): Observable<HttpResponse<Comptedacces>>{
+    return this.http.post<Comptedacces>(`${this.END_POINT}/add-serveur/${comptedacces.id}`,serveurs,{observe: "response"});
   }
 }

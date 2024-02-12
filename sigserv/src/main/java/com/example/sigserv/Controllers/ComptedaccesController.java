@@ -1,5 +1,6 @@
 package com.example.sigserv.Controllers;
 
+import com.example.sigserv.Models.Application;
 import com.example.sigserv.Models.Comptedacces;
 import com.example.sigserv.Models.Serveur;
 import com.example.sigserv.Services.ComptedaccesService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -28,9 +30,6 @@ public class ComptedaccesController {
 
     @GetMapping("/compte-acces/compte-acces-serveurs/{id}")
     public ResponseEntity<List<Comptedacces>> findComptedaccesByServeurId(@PathVariable Long id){
-        System.out.println("compte dacces serveurs");
-        System.out.println(id);
-
         return ResponseEntity.ok(comptedaccesService.findComptedaccesByServeurId(id));
     }
 
@@ -38,6 +37,11 @@ public class ComptedaccesController {
     public ResponseEntity<Comptedacces> create(@RequestBody Comptedacces comptedacces){
         System.out.println(comptedacces);
         return ResponseEntity.ok(comptedaccesService.create(comptedacces));
+    }
+
+    @PostMapping("/compte-acces/add-serveur/{id}")
+    public ResponseEntity<Comptedacces> addServeursToComptedaccesById(@PathVariable Long id, @RequestBody Set<Serveur> serveurs){
+        return ResponseEntity.ok(comptedaccesService.addServeursToComptedaccesById(id,serveurs));
     }
 
     @PutMapping("/compte-acces")

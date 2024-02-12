@@ -80,7 +80,7 @@ export class DetailComponent implements  OnInit{
   open = false;
 
   serveurs: readonly Serveur[] =[];
-  readonly stringifyServeurVirtuel = (serveur: Serveur): string => `Nom: ${serveur.nom} | Etat: ${serveur.etat} | Adresse IP: ${serveur.adresseip} | Systeme: ${serveur.systeme}   | CreatedAt: ${serveur.createdAt}`;
+  readonly stringifyServeurVirtuel = (serveur: Serveur): string => `Nom: ${serveur.nom} | Etat: ${serveur.etat} | Adresse IP: ${serveur.adresseip} | Systeme: ${serveur.systeme.nom}   | CreatedAt: ${serveur.createdAt}`;
   open1=false;
 
   readonly columnstags = ['nom', 'createdAt'];

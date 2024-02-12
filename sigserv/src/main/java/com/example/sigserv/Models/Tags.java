@@ -1,6 +1,7 @@
 package com.example.sigserv.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Tags {
 
     @Id
@@ -42,15 +44,14 @@ public class Tags {
         this.updatedAt = Instant.now();
     }
 
+    public Tags() { }
+
     public Tags(Long id, String nom, Instant createdAt, Instant updatedAt, Set<Application> applications) {
         this.id = id;
         this.nom = nom;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.applications = applications;
-    }
-
-    public Tags() {
     }
 
     public Long getId() {

@@ -25,7 +25,7 @@ export class UtilisateurService {
   }
 
   update(utilisateur: Utilisateur): Observable<HttpResponse<Utilisateur>> {
-    return this.http.put<Utilisateur>(`${this.END_POINT}/${utilisateur.id}`,utilisateur,{observe: "response"});
+    return this.http.put<Utilisateur>(`${this.END_POINT}`,utilisateur,{observe: "response"});
   }
 
   findById(id: number): Observable<HttpResponse<Utilisateur>> {

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import {TUI_DEFAULT_MATCHER, TuiBooleanHandler, tuiPure} from '@taiga-ui/cdk';
@@ -13,7 +13,6 @@ import { TagsService } from 'src/app/shareds/services/tags.service';
   selector: 'app-nouveau',
   templateUrl: './nouveau.component.html',
   styleUrls: ['./nouveau.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NouveauComponent implements OnInit{
 
@@ -76,14 +75,13 @@ export class NouveauComponent implements OnInit{
       const systeme = new Systeme();
        return {
          ...new Systeme(),
-
          nom: this.sysForm.get("nom")?.value,
          version: this.sysForm.get("version")?.value,
          distribution: this.sysForm.get("distribution")?.value,
          tags: this.sysForm.get("tags")?.value,
          serveurs: null,
-         createdAt:  null,
-         updatedAt:  null
+         createdAt:  this.sysForm.get("createdAt")?.value,
+         updatedAt:  this.sysForm.get("updatedAt")?.value
        }
       }
 }

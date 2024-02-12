@@ -5,7 +5,6 @@ import {Emplacement} from "../../../shareds/models/emplacement";
 import {Router} from "@angular/router";
 import {Datacenter} from "../../../shareds/models/datacenter";
 import {DatacenterService} from "../../../shareds/services/datacenter.service";
-import {Systeme} from "../../../shareds/models/systeme";
 
 @Component({
   selector: 'app-nouveau',
@@ -19,7 +18,7 @@ export class NouveauComponent implements OnInit{
 
 
   emplForm = new FormGroup({
-    datacenter: new FormControl(``,Validators.required),
+    datacenter: new FormControl(null,Validators.required),
     couloir: new FormControl(``, Validators.required),
     armoire: new FormControl(``, Validators.required),
     etagere: new FormControl(``, Validators.required),
@@ -51,6 +50,7 @@ export class NouveauComponent implements OnInit{
 
   emplSubmited(): void {
     const emplacement: Emplacement | undefined = this.createForm();
+    console.log(emplacement);
     this.emplacementService.create(emplacement!)
       .subscribe(
         (res) => {
@@ -64,7 +64,7 @@ export class NouveauComponent implements OnInit{
   }
 
   createForm(): Emplacement | undefined {
-    const emplacement = new Emplacement();
+
     return {
       ...new Emplacement(),
       armoire: this.emplForm.get("armoire")?.value,
@@ -72,6 +72,7 @@ export class NouveauComponent implements OnInit{
       couloir: this.emplForm.get("couloir")?.value,
       createdAt: this.emplForm.get("createdAt")?.value,
       updatedAt: this.emplForm.get("updatedAt")?.value,
+      datacenter: this.emplForm.get("datacenter")?.value,
       id: null,
     };
   }

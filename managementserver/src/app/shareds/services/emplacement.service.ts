@@ -27,7 +27,7 @@ export class EmplacementService {
   }
 
   update(emplacement: Emplacement): Observable<HttpResponse<Emplacement>> {
-    return this.http.put<Emplacement>(`${this.END_POINT}/${emplacement.id}`,emplacement,{observe: "response"});
+    return this.http.put<Emplacement>(`${this.END_POINT}`,emplacement,{observe: "response"});
   }
 
   findById(id: number): Observable<HttpResponse<Emplacement>> {

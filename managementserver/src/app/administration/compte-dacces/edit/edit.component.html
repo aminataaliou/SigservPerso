@@ -1,6 +1,6 @@
 <div class="bg-white row  d-flex justify-content-center align-items-center flex-column " >
   <h2 class=" title mb-3 mt-3 d-flex justify-content-center align-items-center">
-    Nouveau Compte D'accès
+    Mise a jour du Compte D'accès
     <code tuiText=".tui-space(top, <value>);"></code>
   </h2>
   <form [formGroup]="compteForm" class="col-md-8 " (ngSubmit)="compteSubmited()">
@@ -47,7 +47,7 @@
       <div class="col-md-6 mt-5">
         <h6>Date de creation</h6>
         <tui-input-date
-          formControlName="dateCreation"
+          formControlName="createdAt"
           tuiTextfieldSize="m"
           class="tui-space_vertical-4"
           [tuiTextfieldLabelOutside]="true"

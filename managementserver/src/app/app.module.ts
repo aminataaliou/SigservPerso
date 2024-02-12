@@ -6,7 +6,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {InterceptorAdminInterceptor} from "./shareds/interceptors/interceptor-admin.interceptor";
+import {ErrorHandlerInterceptor} from "./shareds/interceptors/error-handler.interceptor";
 
 @NgModule({
   declarations: [
@@ -21,7 +23,14 @@ import {HttpClientModule} from "@angular/common/http";
       TuiAlertModule,
     HttpClientModule
 ],
-  providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}],
+  providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer},
+    { provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorAdminInterceptor,
+      multi: true},
+    { provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlerInterceptor,
+      multi: true}
+      ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

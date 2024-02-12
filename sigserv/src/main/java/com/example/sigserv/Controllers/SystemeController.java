@@ -1,17 +1,15 @@
 package com.example.sigserv.Controllers;
 
 
-import com.example.sigserv.Models.Emplacement;
 import com.example.sigserv.Models.Serveur;
 import com.example.sigserv.Models.Systeme;
-import com.example.sigserv.Services.EmplacementService;
 import com.example.sigserv.Services.SystemeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -46,4 +44,8 @@ public class SystemeController {
         systemeService.delete(id);
         return ResponseEntity.noContent().build();
     }
+//    @PostMapping("/systemes/add-serveurs/{id}")
+//    public ResponseEntity<Systeme> addServeurToSystemesById(@PathVariable Long id,@RequestBody Set<Serveur> serveurs){
+//        return ResponseEntity.ok(systemeService.addServeurToSystemesById(id,serveurs));
+//    }
 }

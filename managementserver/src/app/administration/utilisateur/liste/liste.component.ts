@@ -76,12 +76,12 @@ export class ListeComponent {
           this.query();
         },
         (err) => {
-          this.alerts.open(`Une erreur s'est produite lors de la suppression de l'utilisateur <<${utilisateur.nom}>>`);
+          this.alerts.open(`Une erreur s'est produite lors de la suppression de l'utilisateur << ${utilisateur.nom} >>`);
 
         }
       );
 
-    this.alerts.open(`l'utilisateur <<${utilisateur.nom}>> a été supprimé avec succès`,{
+    this.alerts.open(`L'utilisateur << ${utilisateur.nom} >> a été supprimé avec succès`,{
       status: 'success'
     }).subscribe()
   }

@@ -13,7 +13,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -54,11 +56,14 @@ public class UtilisateurController {
     }
 
     @PostMapping("/authenticate")
-    public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<Map<String,String>> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(authRequest.getUsername());
+            String token = jwtService.generateToken(authRequest.getUsername());
+            Map<String,String> map = new HashMap<>();
+            map.put("token",token);
+            return ResponseEntity.ok(map);
         } else {
             throw new UsernameNotFoundException("invalid user request !");
       }

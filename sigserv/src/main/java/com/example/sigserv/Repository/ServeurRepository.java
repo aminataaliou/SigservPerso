@@ -12,12 +12,12 @@ import java.util.Optional;
 
 @Repository
 public interface ServeurRepository extends JpaRepository<Serveur,Long> {
-    @Query(value = "select  s from application app\n" +
-            "inner join serveurs_applications sa on app.id = sa.application_id\n" +
-            "inner join serveur s on sa.serveur_id = s.id where s.id= :idApplication",nativeQuery=true)
+    @Query(value = "select  s.* from application app\n" +
+            "            inner join serveurs_applications sa on app.id = sa.application_id\n" +
+            "            inner join serveur s on sa.serveur_id = s.id where sa.application_id= :idApplication",nativeQuery=true)
     List<Serveur> findServeurByApplicationId( Long idApplication);
 
-    @Query(value = "select  s.* from comptedacces compte inner join serveurs_comptedacces sc on compte.id = sc.comptedacces_id inner join serveur s on sc.serveur_id = s.id where s.id= :idComptedacces",nativeQuery=true)
+    @Query(value = "select  s.* from comptedacces compte inner join serveurs_comptedacces sc on compte.id = sc.comptedacces_id inner join serveur s on sc.serveur_id = s.id where sc.comptedacces_id= :idComptedacces",nativeQuery=true)
     List<Serveur> findServeurByComptedaccesId( Long idComptedacces);
 
     @Query(value="select serv.* from serveur serv inner join serveur_serveurs ss on serv.id = ss.serveur_id where ss.serveur_id = :idServeurvirtuel",nativeQuery=true)

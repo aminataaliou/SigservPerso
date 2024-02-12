@@ -112,13 +112,12 @@
         *tuiCell="'createdAt'"
         tuiTd
       >
-        <div [class]="tags.createdAt">{{ tags.createdAt | date :'short' }}</div>
+        <div >{{ tags.createdAt | date :'short' }}</div>
       </td>
       <td
         *tuiCell="'actions'"
         tuiTd
       >
-
         <button
           tuiIconButton
           appearance="secondary-destructive"

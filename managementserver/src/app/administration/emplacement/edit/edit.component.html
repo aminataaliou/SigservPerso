@@ -1,16 +1,33 @@
 <div class="bg-white row  d-flex justify-content-center align-items-center flex-column " >
   <h2 class=" title mb-3 mt-3 d-flex justify-content-center align-items-center">
-    Nouveau Emplacement
+    Mise a jour de l'Emplacement
     <code tuiText=".tui-space(top, <value>);"></code>
   </h2>
   <form [formGroup]="emplForm" class="col-md-8 " (ngSubmit)="emplSubmited()">
     <div class="row g-3">
       <div class="col-md-6 mt-5">
         <h6> Nom Du Data Center</h6>
-        <tui-input tuiTextfieldSize="m" formControlName="datacenter">
-          Entrez le nom du Data Center!
-          <input  tuiTextfield type="Field placeholder" class="form-control" name="datacenter"/>
-        </tui-input>
+        <tui-combo-box
+          tuiTextfieldSize="m"
+          formControlName="datacenter"
+          [valueContent]="contentDatacenter"
+          [stringify]="stringifyDatacenter"
+        >
+          Datacenter
+          <input
+            tuiTextfield
+            placeholder="choississez votre datacenter ..."/>
+          <tui-data-list-wrapper
+            *tuiDataList
+            [items]="datacenter"
+            [itemContent]="contentDatacenter"
+          ></tui-data-list-wrapper>
+        </tui-combo-box>
+        <ng-template #contentDatacenter let-datacenter>
+          <div class="template">
+            <div class="datacenter">  {{datacenter?.nom}} </div>
+          </div>
+        </ng-template>
       </div>
       <div class="col-md-6 mt-5">
         <h6> Numero du Couloir</h6>

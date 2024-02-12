@@ -33,8 +33,11 @@ export class ListeComponent {
       (res) => {
         this.emplacements = res.body ?? [];
         console.log(this.emplacements);
+        this.alerts.open(`Vous avez ${this.emplacements.length} emplacements`).subscribe();
       },
-      (err) => { }
+      (err) => {
+        this.alerts.open(`Vous avez ${this.emplacements.length} emplacements`).subscribe();
+      }
     )
   }
 
@@ -72,7 +75,7 @@ export class ListeComponent {
 
         }
       );
-    this.alerts.open(`l'emplacement <<${emplacement.datacenter.nom}>> a été supprimé avec succès`,{
+    this.alerts.open(`L'emplacement ${emplacement.datacenter?.nom} a été supprimé avec succès`,{
       status: 'success'
     }).subscribe();
   }

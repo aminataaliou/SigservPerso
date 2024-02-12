@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface ComptedaccesRepository extends JpaRepository<Comptedacces,Long> {
 
-@Query(value = "select  compte.* from serveur s inner join serveurs_comptedacces sc on s.id = sc.serveur_id inner join comptedacces compte on sc.comptedacces_id = compte.id where s.id= :idServeur",nativeQuery=true)
+@Query(value = "select  compte.* from comptedacces compte inner join serveurs_comptedacces sc on compte.id = sc.comptedacces_id inner join serveur s on sc.serveur_id = s.id where s.id= :idServeur",nativeQuery=true)
     List<Comptedacces> findComptedaccesByServeurId(Long idServeur);
 }

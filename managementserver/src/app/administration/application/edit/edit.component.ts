@@ -14,7 +14,7 @@ import {Etat} from "../../../shareds/models/etat";
 export class EditComponent implements OnInit {
 
   id:number|undefined;
-  application:Application|undefined;
+  application: Application | undefined;
   types : string[] = Object.keys(Type);
   etats : string[] = Object.keys(Etat);
 
@@ -32,7 +32,7 @@ export class EditComponent implements OnInit {
   });
 
   constructor(
-    private applicataionService: ApplicationService,
+    private applicationService: ApplicationService,
     private activatedroute:ActivatedRoute,
     protected fb: FormBuilder,
     private router:Router
@@ -62,28 +62,46 @@ export class EditComponent implements OnInit {
       tags: application.tags,
       serveurs: application.serveurs,
     })
-
     console.log("After Update")
     console.log(this.appliForm.value)
   }
 
   findApplicationById(id:number){
-    this.applicataionService.findById(id).subscribe(
+    this.applicationService.findById(id).subscribe(
       (res) => {
       console.log("APPLICATIONS",res);
       this.application = res.body ?? undefined;
         if (this.application) this.updateForm(this.application);
       console.log(this.application)
-
     },
     (err)=>{}
     )
     this.updateForm(this.application!)
   }
 
+  createForm(): Application | undefined {
+    return {
+      ...new Application(),
+      id: this.appliForm.get("id")?.value,
+      nom: this.appliForm.get("nom")?.value,
+      port:this.appliForm.get("port")?.value,
+      url: this.appliForm.get("url")?.value,
+      adresseIp:this.appliForm.get("adresseip")?.value,
+      type: this.appliForm.get("type")?.value,
+      etat: this.appliForm.get("etat")?.value,
+      createdAt: this.appliForm.get("createdAt")?.value,
+      updatedAt: this.appliForm.get("updatedAt")?.value,
+      tags:this.appliForm.get("tags")?.value,
+      serveurs:this.appliForm.get("serveurs")?.value,
+      dateDeploiement:this.appliForm.get("dateDeploiement")?.value,
+
+    };
+  }
+
   appliSubmited(){
-    console.log("Application",this.appliForm)
-    this.applicataionService.update(this.application).subscribe(
+    console.log("Application")
+    const application: Application | undefined = this.createForm();
+    this.applicationService.update(application!).subscribe(
       (res) => {
         console.log("mise à jour effectué avec succès",res);
         this.router.navigateByUrl("/admin/applications/liste").then();

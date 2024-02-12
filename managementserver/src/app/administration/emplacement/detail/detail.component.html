@@ -193,13 +193,13 @@
               *tuiCell="'etat'"
               tuiTd
             >
-              <div [class]="serveur.etat">{{ serveur.etat }}</div>
+              <div >{{ serveur.etat }}</div>
             </td>
             <td
               *tuiCell="'adresseip'"
               tuiTd
             >
-              <div [class]="serveur.adresseIp">{{ serveur.adresseip }}</div>
+              <div >{{ serveur.adresseip }}</div>
             </td>
             <td
               *tuiCell="'systeme'"
@@ -216,7 +216,7 @@
               *tuiCell="'createdAt'"
               tuiTd
             >
-              <div [class]="serveur.createdAt">{{ serveur.createdAt | date :'short' }}</div>
+              <div >{{ serveur.createdAt | date :'short' }}</div>
             </td>
           </tbody>
         </table>

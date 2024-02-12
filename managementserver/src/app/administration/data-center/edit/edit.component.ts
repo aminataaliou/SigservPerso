@@ -53,7 +53,7 @@ export class EditComponent implements OnInit{
       pays: datacenter.pays,
       ville: datacenter.ville,
       quartier: datacenter.quartier,
-      emplacements: datacenter.emplacement
+      emplacements: datacenter.emplacement,
     })
     console.log("After Update")
     console.log(this.dataForm.value)
@@ -73,9 +73,23 @@ export class EditComponent implements OnInit{
     this.updateForm(this.datacenter!)
   }
 
+  createForm(): Datacenter | undefined {
+    return {
+      ...new Datacenter(),
+      nom:this.dataForm.get("nom")?.value,
+      pays:this.dataForm.get("pays")?.value,
+      ville:this.dataForm.get("ville")?.value,
+      quartier:this.dataForm.get("quartier")?.value,
+      createdAt: this.dataForm.get("createdAt")?.value,
+      updatedAt: this.dataForm.get("updatedAt")?.value,
+      id: this.dataForm.get("id")?.value,
+    };
+  }
+
   dataSubmited(){
-    console.log("DATA_CENTER",this.dataForm)
-    this.datacenterService.update(this.datacenter).subscribe(
+    console.log("DATA_CENTER",this.dataForm);
+    const datacenter:Datacenter | undefined = this.createForm()
+    this.datacenterService.update(datacenter!).subscribe(
       (res) => {
         console.log("mise à jour effectué avec succès",res);
         this.router.navigateByUrl("/admin/data-center/liste").then();

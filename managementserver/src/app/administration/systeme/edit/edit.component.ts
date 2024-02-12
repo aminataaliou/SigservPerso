@@ -46,9 +46,7 @@ export class EditComponent implements OnInit {
     this.activatedroute.params.subscribe((params) =>{
       if(params['id']){
         this.id=params['id'];
-        this.findSystemeById(this.id!);
-
-      }
+        this.findSystemeById(this.id!);}
     })
    console.log("data======",this.id);
   }
@@ -67,10 +65,8 @@ export class EditComponent implements OnInit {
   }
 
   updateForm(systeme: Systeme){
-
     console.log("Before Update")
     console.log(systeme)
-
     this.sysForm.patchValue({
       id:systeme.id,
       nom: systeme.nom,
@@ -79,15 +75,28 @@ export class EditComponent implements OnInit {
       createdAt: systeme.createdAt,
       updatedAt: systeme.updatedAt
     })
-
     console.log("After Update")
     console.log(this.sysForm.value)
   }
 
+  createForm(): Systeme | undefined {
+    return {
+      ...new Systeme(),
+      id: this.sysForm.get("id")?.value,
+      nom: this.sysForm.get("nom")?.value,
+      version: this.sysForm.get("version")?.value,
+      distribution: this.sysForm.get("distribution")?.value,
+      tags: this.sysForm.get("tags")?.value,
+      serveurs: this.sysForm.get("serveurs")?.value,
+      createdAt:  this.sysForm.get("createdAt")?.value,
+      updatedAt:  this.sysForm.get("updatedAt")?.value
+    }
+  }
 
   sysSubmited(){
     console.log("AAAAAAAAAAAAAAAAAAA",this.sysForm)
-    this.systemeService.update(this.systeme)
+    const systeme :Systeme | undefined = this.createForm();
+    this.systemeService.update(systeme!)
       .subscribe(
         (res) => {
           console.log("mise à jour effectué avec succès",res);

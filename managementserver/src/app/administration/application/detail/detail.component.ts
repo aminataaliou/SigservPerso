@@ -32,16 +32,16 @@ export class DetailComponent implements OnInit {
   id:number | undefined;
   application: Application | undefined;
 
+  tagsByApplicationId: readonly Tags[] = [];
   readonly columnstags = ['nom', 'createdAt'];
- tagsByApplicationId: readonly Tags[] = [];
   tag:Tags | undefined;
   open1=false;
-  tags:readonly Tags[];
+  tags:readonly Tags[] =[];
   readonly stringifyTags = (tags: Tags): string => `Nom: ${tags.nom} `;
+
 
   serveurByApplicationId: readonly Serveur[] = [];
   readonly columnsServeur = ['nom', 'etat', 'adresseip', 'systeme', 'createdAt'];
-
   serveurs: readonly Serveur[] =[];
   readonly stringifyServeur = (serveur: Serveur): string => `Nom: ${serveur.nom} | Etat: ${serveur.etat} | Adresse IP: ${serveur.adresseip} | Systeme: ${serveur.systeme}   | CreatedAt: ${serveur.createdAt}`;
   open=false;
@@ -105,10 +105,8 @@ export class DetailComponent implements OnInit {
     this.serveurService.query().subscribe(
       (res)=> {
         console.log("SERVEURS");
-        this.serveurs = res.body ?? [];
-      }
-    )
-  }
+        this.serveurs = res.body ?? [];}
+    )}
 
   findServeurByApplicationId(id:number):void{
     this.serveurService.findServeurByApplicationId(id).subscribe(
@@ -119,7 +117,6 @@ export class DetailComponent implements OnInit {
       (err)=>{}
     )
   }
-
   showDialogServeur(): void {
     this.open = true;
   }

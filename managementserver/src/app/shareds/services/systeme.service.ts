@@ -3,6 +3,7 @@ import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Observable} from "rxjs";
 import {environment} from "../../../environments/environment";
 import { Systeme } from '../models/systeme';
+import {Serveur} from "../models/serveur";
 
 
 @Injectable({providedIn: 'root'})
@@ -25,10 +26,15 @@ export class SystemeService {
   }
 
   update(systeme: Systeme): Observable<HttpResponse<Systeme>> {
-    return this.http.put<Systeme>(`${this.END_POINT}/${systeme.id}`,systeme,{observe: "response"});
+    return this.http.put<Systeme>(`${this.END_POINT}`,systeme,{observe: "response"});
   }
 
   findById(id: number): Observable<HttpResponse<Systeme>> {
     return this.http.get<Systeme>(`${this.END_POINT}/${id}`,{observe: "response"});
   }
+
+  // addServeurToSystemesById(systeme :Systeme,serveurs:Serveur[]): Observable<HttpResponse<Systeme>>{
+  //   return this.http.post<Systeme>(`${this.END_POINT}/add-serveurs/${systeme.id}`,serveurs,{observe: "response"});
+  // }
+
 }

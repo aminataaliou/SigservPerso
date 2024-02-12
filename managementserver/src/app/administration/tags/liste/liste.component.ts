@@ -20,15 +20,11 @@ export class ListeComponent implements OnInit{
   tag:Tags | undefined;
   open = false;
   open1 = false;
+
   tagsForm = new FormGroup({
     nom: new FormControl(``, Validators.required),
-    id: new FormControl(``),
+    id: new FormControl(null),
   });
-
-  tagForm = this.fb.group({
-    id: [],
-    nom: [],
-  })
 
   ngOnInit() {
     this.query();
@@ -53,13 +49,15 @@ export class ListeComponent implements OnInit{
     this.tagsService.query().subscribe(
       (res) => {
         this.tags = res.body ?? [];
+        this.alerts
+          .open(`Vous avez ${this.tags.length} tags`).subscribe()
         console.log(this.tags);
       },
-      (err) => {
-      }
+      (err) => { }
     )
   }
 
+  /////////////////////////////////DELETE///////////////////////////////////
   showDialog1(tags: Tags): void {
     this.dialogs.open<string>(
       new PolymorpheusComponent(ConfirmationDeleteComponent, this.injector),
@@ -79,7 +77,6 @@ export class ListeComponent implements OnInit{
       },
     });
   }
-
   private deleteTagsById(tags: Tags) {
     this.tagsService.delete(tags.id!)
       .subscribe(
@@ -87,21 +84,26 @@ export class ListeComponent implements OnInit{
           this.query();
         },
         (err) => {
-          this.alerts.open(`Une erreur s'est produite lors de la suppression du tags <<${tags.nom}>>`);
+          this.alerts.open(`Une erreur s'est produite lors de la suppression du tags << ${tags.nom} >>`);
         }
       );
-    this.alerts.open(`le tags <<${tags.nom}>> a été supprimé avec succès`, {
+    this.alerts.open(`Le tags << ${tags.nom} >> a été supprimé avec succès`, {
       status: 'success'
     }).subscribe();
   }
 
+  /////////////////////////////////CREATION///////////////////////////////////
   showDialog(): void {
     this.open = true;
   }
-  showDialogTags(): void {
-    this.open1 = true;
+  createForm(): Tags | undefined {
+    const tags = new Tags();
+    return {
+      ...new Tags(),
+      nom: this.tagsForm.get("nom")?.value,
+      id: this.tagsForm.get("id")?.value,
+    };
   }
-
   tagsSubmited(): void {
     const tags: Tags | undefined = this.createForm();
     this.tagsService.create(tags!)
@@ -114,23 +116,21 @@ export class ListeComponent implements OnInit{
         },
         (err) => {
           console.log("Erreur lors de la sauvegarde", err);
-        }
-      )
+        })
   }
 
-  createForm(): Tags | undefined {
-    const tags = new Tags();
-    return {
-      ...new Tags(),
-      nom: this.tagsForm.get("nom")?.value,
-      id: null,
-    };
-  }
 
+/////////////////////////////////UPDATE///////////////////////////////////
+  showDialogTags(): void {
+    this.open1 = true;
+  }
+  tagForm = this.fb.group({
+    id: [],
+    nom: [],
+  })
   updateForm(tag: Tags) {
     console.log("Before Update")
     console.log(tag)
-
     this.tagForm.patchValue({
       id: tag.id,
       nom: tag.nom,
@@ -138,7 +138,6 @@ export class ListeComponent implements OnInit{
     console.log("After Update")
     console.log(this.tagForm.value)
   }
-
   findTagsById(id: number) {
     if (id) {
       this.tagsService.findById(id).subscribe(
@@ -146,15 +145,15 @@ export class ListeComponent implements OnInit{
           this.tag = res.body ?? undefined
           if (this.tag) this.updateForm(this.tag);
         },
-        (err) => {
-        }
+        (err) => {}
       )
       this.updateForm(this.tag!)
     }
   }
   tagsSubmit() {
     console.log("TAAAAAGGGGGSSSS", this.tagForm)
-    this.tagsService.update(this.tag)
+    const tags: Tags | undefined = this.createForm();
+    this.tagsService.update(tags!)
       .subscribe(
         (res) => {
           console.log("mise à jour effectué avec succès", res);

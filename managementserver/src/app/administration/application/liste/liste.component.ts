@@ -83,11 +83,11 @@ export class ListeComponent  {
           this.query();
         },
         (err) => {
-          this.alerts.open(`Une erreur s'est produite lors de la suppression de l'application <<${application.nom}>>`);
+          this.alerts.open(`Une erreur s'est produite lors de la suppression de l'application << ${application.nom} >>`);
 
         }
       );
-    this.alerts.open(`l'application <<${application.nom}>> a été supprimé avec succès`,{
+    this.alerts.open(`L'application << ${application.nom} >> a été supprimé avec succès`,{
       status: 'success'
     }).subscribe();
   }

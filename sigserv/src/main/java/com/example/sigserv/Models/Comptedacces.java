@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Comptedacces {
@@ -25,14 +27,14 @@ public class Comptedacces {
             joinColumns=@JoinColumn(name="comptedacces_id"),
             inverseJoinColumns=@JoinColumn(name="serveur_id"))
     @JsonIgnoreProperties(value = {"serveurs","applications","tags","comptedacces"},allowSetters = true)
-    private List<Serveur> serveurs = new ArrayList<>();
+    private Set<Serveur> serveurs = new HashSet<>();
 
     private Instant createdAt;
 
     private Instant updatedAt;
 
 
-    public Comptedacces(Long id, String nom, String type, String password, List<Serveur> serveurs, Instant createdAt, Instant updatedAt) {
+    public Comptedacces(Long id, String nom, String type, String password, Set<Serveur> serveurs, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.nom = nom;
         this.type = type;
@@ -88,14 +90,12 @@ public class Comptedacces {
         this.password = password;
     }
 
-    public List<Serveur> getServeurs() {
+    public Set<Serveur> getServeurs() {
         return serveurs;
     }
-
-    public void setServeurs(List<Serveur> serveurs) {
+    public void setServeurs(Set<Serveur> serveurs) {
         this.serveurs = serveurs;
     }
-
     public Instant getCreatedAt() {
         return createdAt;
     }

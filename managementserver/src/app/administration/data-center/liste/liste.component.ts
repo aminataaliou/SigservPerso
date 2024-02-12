@@ -34,6 +34,8 @@ export class ListeComponent implements OnInit{
     this.datacenterService.query().subscribe(
       (res) => {
         this.datacenter = res.body ?? [];
+        this.alerts
+          .open(`Vous avez ${this.datacenter.length} Data-center`).subscribe()
         console.log(this.datacenter);
       },
       (err) => { }
@@ -70,11 +72,11 @@ export class ListeComponent implements OnInit{
           this.query();
         },
         (err) => {
-          this.alerts.open(`Une erreur s'est produite lors de la suppression du data_center <<${datacenter.nom}>>`);
+          this.alerts.open(`Une erreur s'est produite lors de la suppression du data_center << ${datacenter.nom} >>`);
 
         }
       );
-    this.alerts.open(`le data_center <<${datacenter.nom}>> a été supprimé avec succès`,{
+    this.alerts.open(`le data_center << ${datacenter.nom} >> a été supprimé avec succès`,{
       status: 'success'
     }).subscribe();
   }

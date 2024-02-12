@@ -28,7 +28,7 @@ export class DatacenterService {
   }
 
   update(datacenter: Datacenter): Observable<HttpResponse<Datacenter>> {
-    return this.http.put<Datacenter>(`${this.END_POINT}/${datacenter.id}`,datacenter,{observe: "response"});
+    return this.http.put<Datacenter>(`${this.END_POINT}`,datacenter,{observe: "response"});
   }
 
   findById(id: number): Observable<HttpResponse<Datacenter>> {

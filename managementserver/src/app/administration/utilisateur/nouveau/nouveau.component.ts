@@ -24,6 +24,8 @@ export class NouveauComponent implements OnInit{
     nom: new FormControl(``, Validators.required),
     prenom: new FormControl(``, Validators.required),
     email: new FormControl(``, Validators.required),
+    usermane: new FormControl(``, Validators.required),
+    password: new FormControl(``, Validators.required),
     profil: new FormControl(``),
   });
   search: string | null = '';
@@ -61,8 +63,10 @@ export class NouveauComponent implements OnInit{
          prenom: this.utiForm.get("prenom")?.value,
         email : this.utiForm.get("email")?.value,
         profil: this.utiForm.get("profil").value,
-         createdAt:  null,
-        updatedAt:  null
+        username: this.utiForm.get("username").value,
+        password: this.utiForm.get("password").value,
+         createdAt:  this.utiForm.get("createdAt").value,
+        updatedAt:  this.utiForm.get("updatedAt").value,
        }
       }
 }

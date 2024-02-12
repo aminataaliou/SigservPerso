@@ -123,7 +123,7 @@
                 </tui-multi-select>
                 <ng-template #contentServeurVirtuel let-serveurVirtuel>
                   <div class="template">
-                    <div class="serveurvirtuel"> Nom: {{serveur?.nom}} | Adresse Ip: {{serveur?.adresseip}} | Etat: {{serveur?.etat}} | Systeme: {{serveur?.systeme}} | CreatedAt: {{serveur?.createdAt}}</div>
+                    <div class="serveurvirtuel"> Nom: {{serveur?.nom}} | Adresse Ip: {{serveur?.adresseip}} | Etat: {{serveur?.etat}} | Systeme: {{serveur?.systeme?.nom}} | CreatedAt: {{serveur?.createdAt}}</div>
                   </div>
                 </ng-template>
                 <p>
@@ -202,13 +202,13 @@
             *tuiCell="'etat'"
             tuiTd
           >
-            <div [class]="serveur.etat">{{ serveur.etat }}</div>
+            <div >{{ serveur.etat }}</div>
           </td>
           <td
             *tuiCell="'adresseip'"
             tuiTd
           >
-            <div [class]="serveur.adresseIp">{{ serveur.adresseip }}</div>
+            <div >{{ serveur.adresseip }}</div>
           </td>
           <td
             *tuiCell="'systeme'"
@@ -225,7 +225,7 @@
             *tuiCell="'createdAt'"
             tuiTd
           >
-            <div [class]="serveur.createdAt">{{ serveur.createdAt | date :'short' }}</div>
+            <div >{{ serveur.createdAt | date :'short' }}</div>
           </td>
         </tbody>
       </table>
@@ -234,7 +234,7 @@
         <tbody>
         <tr>
           <td> <label><b>Data Center</b></label></td>
-          <td><span>{{ serveur?.emplacement?.datacenter}}</span></td>
+          <td><span>{{ serveur?.emplacement?.datacenter?.nom}}</span></td>
         </tr>
         <tr>
           <td><label><b>Armoire</b></label></td>
@@ -415,32 +415,32 @@
             *tuiCell="'etat'"
             tuiTd
           >
-            <div [class]="application.etat">{{ application.etat }}</div>
+            <div >{{ application.etat }}</div>
           </td>
           <td
             *tuiCell="'adresseIp'"
             tuiTd
           >
-            <div [class]="application.adresseIp">{{ application.adresseIp }}</div>
+            <div >{{ application.adresseIp }}</div>
           </td>
           <td
             *tuiCell="'port'"
             tuiTd
           >
-            <div [class]="application.port">{{ application.port }}</div>
+            <div >{{ application.port }}</div>
           </td>
           <td
             *tuiCell="'url'"
             tuiTd
           >
-            <div [class]="application.url">{{ application.url }}</div>
+            <div >{{ application.url }}</div>
           </td>
 
           <td
             *tuiCell="'createdAt'"
             tuiTd
           >
-            <div [class]="application.createdAt">{{ application.createdAt | date :'short' }}</div>
+            <div >{{ application.createdAt | date :'short' }}</div>
           </td>
         </tr>
         </tbody>
@@ -555,13 +555,13 @@
             *tuiCell="'password'"
             tuiTd
           >
-            <div [class]="comptedacces.password">{{ comptedacces.password }}</div>
+            <div >{{ comptedacces.password }}</div>
           </td>
           <td
             *tuiCell="'createdAt'"
             tuiTd
           >
-            <div [class]="comptedacces.createdAt">{{ comptedacces.createdAt | date :'short' }}</div>
+            <div >{{ comptedacces.createdAt | date :'short' }}</div>
           </td>
         </tbody>
       </table>
@@ -673,7 +673,7 @@
               *tuiCell="'createdAt'"
               tuiTd
             >
-              <div [class]="tags.createdAt">{{ tags.createdAt | date :'short' }}</div>
+              <div >{{ tags.createdAt | date :'short' }}</div>
             </td>
           </tr>
           </tbody>

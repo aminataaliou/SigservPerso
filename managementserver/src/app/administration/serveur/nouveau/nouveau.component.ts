@@ -43,7 +43,7 @@ export class NouveauComponent implements OnInit{
 
     search: string | null = '';
 
-  readonly stringifyEmplacement = (emplacement: Emplacement): string => `Armoire: ${emplacement.armoire} | Couloir: ${emplacement.couloir} | Etagère: ${emplacement.etagere}`;
+  readonly stringifyEmplacement = (emplacement: Emplacement): string => `Nom: ${emplacement.datacenter.nom} |Armoire: ${emplacement.armoire} | Couloir: ${emplacement.couloir} | Etagère: ${emplacement.etagere}`;
   readonly stringifySysteme = (systeme: Systeme): string => `Nom: ${systeme.nom} | Version: ${systeme.version} | Distribution: ${systeme.distribution}`;
 
 
