@@ -69,20 +69,20 @@ export class ListeComponent {
   }
 
  deleteUtilisateurById(utilisateur: Utilisateur) {
-    console.log(utilisateur)
-    this.utilisateurService.delete(utilisateur.id!)
-      .subscribe(
-        () => {
-          this.query();
-        },
-        (err) => {
-          this.alerts.open(`Une erreur s'est produite lors de la suppression de l'utilisateur << ${utilisateur.nom} >>`);
+   console.log(utilisateur)
+   this.utilisateurService.delete(utilisateur.id!)
+     .subscribe(
+       () => {
+         this.query();
+         this.alerts.open(`L'utilisateur << ${utilisateur.nom} >> a été supprimé avec succès`, {
+           status: 'success'
+         }).subscribe()
+       },
+       (err) => {
+         console.log(err);
+         this.alerts.open(`Une erreur s'est produite lors de la suppression de l'utilisateur << ${utilisateur.nom} >>`);
 
-        }
-      );
-
-    this.alerts.open(`L'utilisateur << ${utilisateur.nom} >> a été supprimé avec succès`,{
-      status: 'success'
-    }).subscribe()
+       }
+     );
   }
 }

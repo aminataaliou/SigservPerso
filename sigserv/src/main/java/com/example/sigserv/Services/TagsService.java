@@ -1,5 +1,7 @@
 package com.example.sigserv.Services;
 
+import com.example.sigserv.MessageError.BusinessResourceException;
+import com.example.sigserv.Models.Application;
 import com.example.sigserv.Models.Datacenter;
 import com.example.sigserv.Models.Serveur;
 import com.example.sigserv.Models.Tags;
@@ -21,8 +23,12 @@ public class TagsService {
         return tagsRepository.findAll();
     }
 
-    public Optional<Tags> findOneById(Long id){
-        return tagsRepository.findById(id);
+    public Optional<Tags> findOneById(Long id)throws BusinessResourceException {
+        Optional<Tags> tags = tagsRepository.findById(id);
+        if (Boolean.FALSE.equals(tags.isPresent())){
+            throw new BusinessResourceException("Tags Not Found", "Aucune tags avec l'identifiant :" + id);
+        }
+        return tags;
     }
 
     public List<Tags> findTagsByApplicationId(Long id){

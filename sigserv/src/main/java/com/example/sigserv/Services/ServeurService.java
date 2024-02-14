@@ -1,5 +1,6 @@
 package com.example.sigserv.Services;
 
+import com.example.sigserv.MessageError.BusinessResourceException;
 import com.example.sigserv.Models.*;
 import com.example.sigserv.Repository.ServeurRepository;
 import com.example.sigserv.config.BadAlertRequest;
@@ -22,8 +23,12 @@ public class ServeurService {
         return serveurRepository.findAll();
     }
 
-    public Optional<Serveur> findOneById(Long id){
-        return serveurRepository.findById(id);
+    public Optional<Serveur> findOneById(Long id)throws BusinessResourceException {
+        Optional<Serveur> serveur = serveurRepository.findById(id);
+        if (Boolean.FALSE.equals(serveur.isPresent())){
+            throw new BusinessResourceException("Serveur Not Found", "Aucun serveur avec l'identifiant :" + id);
+        }
+        return serveur;
     }
 
     public List<Serveur> findServeurVirtuelByServeurId(Long id){

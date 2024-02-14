@@ -1,5 +1,7 @@
 package com.example.sigserv.Services;
 
+import com.example.sigserv.MessageError.BusinessResourceException;
+import com.example.sigserv.Models.Application;
 import com.example.sigserv.Models.Datacenter;
 import com.example.sigserv.Models.Serveur;
 import com.example.sigserv.Models.Systeme;
@@ -27,8 +29,12 @@ public class SystemeService {
         return systemeRepository.findAll();
     }
 
-    public Optional<Systeme> findOneById(Long id){
-        return systemeRepository.findById(id);
+    public Optional<Systeme> findOneById(Long id)throws BusinessResourceException {
+        Optional<Systeme> systeme = systemeRepository.findById(id);
+        if (Boolean.FALSE.equals(systeme.isPresent())){
+            throw new BusinessResourceException("Systeme Not Found", "Aucun systeme avec l'identifiant :" + id);
+        }
+        return systeme;
     }
 
     public Systeme create(Systeme systeme){

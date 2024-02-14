@@ -1,5 +1,6 @@
 package com.example.sigserv.Services;
 
+import com.example.sigserv.MessageError.BusinessResourceException;
 import com.example.sigserv.Models.Application;
 import com.example.sigserv.Models.Datacenter;
 import com.example.sigserv.Models.Emplacement;
@@ -28,8 +29,12 @@ public class EmplacementService {
         return emplacementRepository.findAll();
     }
 
-    public Optional<Emplacement> findOneById(Long id){
-        return emplacementRepository.findById(id);
+    public Optional<Emplacement> findOneById(Long id)throws BusinessResourceException {
+        Optional<Emplacement> emplacement = emplacementRepository.findById(id);
+        if (Boolean.FALSE.equals(emplacement.isPresent())){
+            throw new BusinessResourceException("Emplacement Not Found", "Aucune emplacement avec l'identifiant :" + id);
+        }
+        return emplacement;
     }
 
     public Emplacement create(Emplacement emplacement){

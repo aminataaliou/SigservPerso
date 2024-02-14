@@ -20,7 +20,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler){
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        this.alerts.open(`${error.message} `,{status:"error"}).subscribe();
+        this.alerts.open(`${error.error.errorMessage} `,{status:"error"}).subscribe();
 /*        if (error.status === 401 ) {
           this.alerts.open(`${error.error.message} `).subscribe();
         }*/

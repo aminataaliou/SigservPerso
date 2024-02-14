@@ -1,5 +1,6 @@
 package com.example.sigserv.Services;
 
+import com.example.sigserv.MessageError.BusinessResourceException;
 import com.example.sigserv.Models.*;
 import com.example.sigserv.Repository.ApplicationRepository;
 import com.example.sigserv.Repository.DatacenterRepository;
@@ -28,8 +29,12 @@ public class ApplicationService {
         return applicationRepository.findAll();
     }
 
-    public Optional<Application> findOneById(Long id){
-        return applicationRepository.findById(id);
+    public Optional<Application> findOneById(Long id)throws BusinessResourceException {
+        Optional<Application> application = applicationRepository.findById(id);
+        if (Boolean.FALSE.equals(application.isPresent())){
+            throw new BusinessResourceException("Application Not Found", "Aucune application avec l'identifiant :" + id);
+        }
+        return application;
     }
 
     public Application create(Application application){

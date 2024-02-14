@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.servlet.http.HttpServletRequest;
 
-@ControllerAdvice(basePackages = {"com.bnguimgo.springbootrestserver"} )
+@ControllerAdvice(basePackages = {"com.example.sigserv"} )
 public class GlobalHandlerControllerException extends ResponseEntityExceptionHandler {
 
     @InitBinder

@@ -1,5 +1,7 @@
 package com.example.sigserv.Services;
 
+import com.example.sigserv.MessageError.BusinessResourceException;
+import com.example.sigserv.Models.Application;
 import com.example.sigserv.Models.Comptedacces;
 import com.example.sigserv.Models.Datacenter;
 import com.example.sigserv.Models.Serveur;
@@ -27,8 +29,12 @@ public class ComptedaccesService {
         return comptedaccesRepository.findAll();
     }
 
-    public Optional<Comptedacces> findOneById(Long id){
-        return comptedaccesRepository.findById(id);
+    public Optional<Comptedacces> findOneById(Long id) throws BusinessResourceException {
+            Optional<Comptedacces> comptedacces = comptedaccesRepository.findById(id);
+            if (Boolean.FALSE.equals(comptedacces.isPresent())){
+                throw new BusinessResourceException("COMPTE Not Found", "Aucune compte avec l'identifiant :" + id);
+            }
+            return comptedacces;
     }
 
     public List<Comptedacces> findComptedaccesByServeurId(Long id){

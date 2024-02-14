@@ -32,19 +32,19 @@ public class UtilisateurService{
     }
 
     public Optional<Utilisateur> findOneById(Long id) throws  BusinessResourceException{
-        Optional<Utilisateur> userFound = utilisateurRepository.findById(id);
-        if (Boolean.FALSE.equals(userFound.isPresent())){
+        Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);
+        if (Boolean.FALSE.equals(utilisateur.isPresent())){
             throw new BusinessResourceException("User Not Found", "Aucun utilisateur avec l'identifiant :" + id);
         }
-        return userFound;
+        return utilisateur;
     }
 
     public Optional<Utilisateur> findOneByUsername(String username) throws BusinessResourceException {
-        Optional<Utilisateur> userFound = utilisateurRepository.findByUsername(username);
-        if (Boolean.FALSE.equals(userFound.isPresent())) {
+        Optional<Utilisateur> utilisateur = utilisateurRepository.findByUsername(username);
+        if (Boolean.FALSE.equals(utilisateur.isPresent())) {
             throw new BusinessResourceException("User Not Found", "L'utilisateur avec cet username n'existe pas :" + username);
         }
-        return userFound;
+        return utilisateur;
     }
 
     public Utilisateur create(Utilisateur utilisateur){
@@ -80,9 +80,9 @@ public class UtilisateurService{
         }catch(EmptyResultDataAccessException ex){
             logger.error(String.format("Aucun utilisateur n'existe avec l'identifiant: "+id, ex));
             throw new BusinessResourceException("DeleteUserError", "Erreur de suppression de l'utilisateur avec l'identifiant: "+id, HttpStatus.NOT_FOUND);
-        }catch(Exception ex){
-            throw new BusinessResourceException("DeleteUserError", "Erreur de suppression de l'utilisateur avec l'identifiant: "+id, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+         }//catch(Exception ex){
+//            throw new BusinessResourceException("DeleteUserError", "Erreur de suppression de l'utilisateur avec l'identifiant: "+id, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
     }
 
 }
