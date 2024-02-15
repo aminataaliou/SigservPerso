@@ -1,9 +1,5 @@
 import {ChangeDetectionStrategy, Component, Inject, Injector} from '@angular/core';
-import { TUI_DEFAULT_MATCHER } from '@taiga-ui/cdk';
 import {TuiAlertService, TuiDialogService} from '@taiga-ui/core';
-import { TUI_ARROW } from '@taiga-ui/kit';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import {debounceTime, filter, map, share, startWith, switchMap, take} from 'rxjs/operators';
 import { Utilisateur } from 'src/app/shareds/models/utilisateur';
 import { UtilisateurService } from 'src/app/shareds/services/utilisateur.service';
 import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
