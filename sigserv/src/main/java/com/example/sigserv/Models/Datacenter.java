@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Entity
 
-public class Datacenter {
+public class  Datacenter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
